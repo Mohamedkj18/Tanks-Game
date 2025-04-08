@@ -1,20 +1,5 @@
-#include <iostream>
-#include <set>
-#include <utility>
-#include <array>
-#include <unordered_map>
 
-enum Direction
-{
-    U,
-    UR,
-    R,
-    DR,
-    D,
-    DL,
-    L,
-    UL
-};
+#include "tanks.hpp"
 
 Direction &operator+=(Direction &dir, double angle)
 {
@@ -148,12 +133,266 @@ Direction &operator+=(Direction &dir, double angle)
     }
 }
 
+class TankShellAbstract
+{
+public:
+    int x, y;
+    int id;
+    Direction dir;
+    Game *game;
+};
+
+class Tank
+{
+
+private:
+    int id;
+    int xTankPosition;
+    int yTankPosition;
+    int artilleryShells;
+    Direction direction;
+    bool destroyed;
+    int reverse;
+    Game *game;
+    int cantShoot;
+
+public:
+    Tank(int n, int x, int y, Direction d, Game *g)
+    {
+        id = n;
+        xTankPosition = x;
+        yTankPosition = y;
+        artilleryShells = 16;
+        direction = d;
+        destroyed = false;
+        game = g;
+    }
+
+    int getReverse()
+    {
+        return reverse;
+    }
+    void incrementReverse()
+    {
+        reverse += 1;
+    }
+
+    int getId()
+    {
+        return id;
+    }
+
+    void setReverse()
+    {
+        reverse = 0;
+    }
+
+    void
+    setDirection(std::string direction)
+    {
+        if (stringToDirection.find(direction) != stringToDirection.end())
+        {
+            this->direction = stringToDirection[direction]; // Access the value directly
+        }
+        else
+        {
+            std::cerr << "Invalid direction string: " << direction << std::endl;
+        }
+    }
+
+    void moveForward()
+    {
+        std::array<int, 2> directions = stringToIntDirection[direction];
+        xTankPosition += directions[0] % game->getWidth();
+        yTankPosition += directions[1] % game->getHeight();
+    }
+
+    void moveBackwards()
+    {
+        std::array<int, 2> directions = stringToIntDirection[direction];
+        xTankPosition -= directions[0] % game->getWidth();
+        yTankPosition -= directions[1] % game->getHeight();
+    }
+
+    void rotateTank(double angle)
+    {
+        direction += angle;
+    }
+
+    int getTankPositionX()
+    {
+        return xTankPosition;
+    }
+
+    int getTankPositionY()
+    {
+        return yTankPosition;
+    }
+
+    void fire()
+    {
+        artilleryShells -= 1;
+        Artillery shellFired = Artillery(xTankPosition, yTankPosition, id, direction, game, this);
+        game->addArtillery(shellFired);
+        std::cout << "Artillery fired!" << std::endl;
+        shellFired.fire();
+    }
+
+    void hit()
+    {
+        destroyed = true;
+        game->removeTank(id);
+    }
+
+    void resetReverse()
+    {
+        reverse = 0;
+    }
+
+    void incrementCantShoot()
+    {
+        cantShoot += 1;
+    }
+    void resetCantShoot()
+    {
+        cantShoot = 0;
+    }
+    bool canShoot()
+    {
+        return cantShoot == 0;
+    }
+    int getCantShoot()
+    {
+        return cantShoot;
+    }
+};
+
+class Artillery
+{
+private:
+    int x, y;
+    int id;
+    Direction dir;
+    Game *game;
+    Tank *tank;
+
+public:
+    Artillery(int x, int y, int id, Direction dir, Game *game, Tank *tank)
+    {
+        this->x = x;
+        this->y = y;
+        this->id = id;
+        this->dir = dir;
+        this->game = game;
+        this->tank = tank;
+    }
+    int getId()
+    {
+        return id;
+    }
+    int getX()
+    {
+        return x;
+    }
+    int getY()
+    {
+        return y;
+    }
+    Direction getDirection()
+    {
+        return dir;
+    }
+    void setX(int x)
+    {
+        this->x = x;
+    }
+    void setY(int y)
+    {
+        this->y = y;
+    }
+    void setDirection(Direction dir)
+    {
+        this->dir = dir;
+    }
+
+    void setId(int id)
+    {
+        this->id = id;
+    }
+
+    void fire()
+    {
+        int w, h;
+
+        w = game->getWidth();
+        h = game->getHeight();
+        int i = 0;
+
+        if (dir == U)
+        {
+
+            y = (y - 1) % h;
+        }
+        else if (dir == UR)
+        {
+            y = (y - 1) % h;
+            x = (x + 1) % w;
+        }
+        else if (dir == R)
+        {
+            x = (x + 1) % w;
+        }
+        else if (dir == DR)
+        {
+            y = (y + 1) % h;
+            x = (x + 1) % w;
+        }
+        else if (dir == D)
+        {
+            y = (y + 1) % h;
+        }
+        else if (dir == DL)
+        {
+            y = (y + 1) % h;
+            x = (x - 1) % w;
+        }
+        else if (dir == L)
+        {
+            x = (x - 1) % w;
+        }
+        else if (dir == UL)
+        {
+            y = (y - 1) % h;
+            x = (x - 1) % w;
+        }
+
+        if (game->getWalls().find(std::make_pair(x, y)) != game->getWalls().end())
+        {
+            std::cout << "Wall at " << x << ", " << y << " hit!" << std::endl;
+            game->hitWall(x, y);
+        }
+        else
+        {
+            for (const auto &pair : game->getTanks())
+            {
+                Tank t = pair.second;
+                if (t.getTankPositionX() == x && t.getTankPositionY() == y)
+                {
+                    std::cout << "Tank " << t.getId() << " was destroyed by " << this->tank->getId() << std::endl;
+                    game->hitTank(pair.first);
+                }
+            }
+        }
+    }
+};
+
 class Game
 {
 private:
     int width;
     int height;
     int gameStep;
+    int totalShellsRemaining;
 
     std::unordered_map<int, Tank> tanks;
     std::unordered_map<int, Artillery> artilleries;
@@ -167,9 +406,7 @@ public:
         std::cout << "Game started!" << std::endl;
         gameStep = 0;
         readFile(fileName);
-
-        gameStep = 0;
-        artilleries = std::unordered_map<int, Artillery>();
+        totalShellsRemaining = tanks.size() * 16;
     }
 
     int getWidth()
@@ -263,7 +500,7 @@ public:
         if (wall.health == 0)
         {
             walls.erase(std::make_pair(x, y));
-            std::cout << "Wall at " << x << ', ' << y << " destroyed!" << std::endl;
+            std::cout << "Wall at " << x << ", " << y << " destroyed!" << std::endl;
         }
         else
         {
@@ -272,7 +509,7 @@ public:
         }
     }
 
-    void hitTank(int tankId, Tank tank)
+    void hitTank(int tankId)
     {
         Tank tank = tanks[tankId];
         tank.hit();
@@ -297,8 +534,8 @@ public:
 
     int readFile(std::string fileName)
     {
-        int currxAxis = 0;
-        int curryAxis = 0;
+        int xAxis = 0;
+        int yAxis = 0;
         std::ifstream file(fileName);
         std::string line;
 
@@ -321,219 +558,156 @@ public:
                     addMine(xAxis, height);
                 else if (c == '1')
                 {
-                    Tank player1 = Tank(1, xAxis, y, stringToDirection.find("L"), game);
+                    Tank player1 = Tank(1, xAxis, yAxis, stringToDirection["L"], this);
                     addTank(player1);
                 }
                 else if (c == '2')
                 {
-                    Tank player2 = Tank(2, xAxis, y, stringToDirection.find("R"), game);
+                    Tank player2 = Tank(2, xAxis, yAxis, stringToDirection["R"], this);
                     addTank(player2);
                 }
-                currxAxis += 1;
+                xAxis += 1;
             }
-            curryAxis += 1;
+            yAxis += 1;
         }
 
         file.close();
         return 0;
     }
-};
 
-class Tank
-{
-
-    std::unordered_map<std::string, std::array<int, 2>> Tank::stringToIntDirection = {
-        {"U", {0, 1}},
-        {"UR", {1, 1}},
-        {"R", {1, 0}},
-        {"DR", {1, -1}},
-        {"D", {0, -1}},
-        {"DL", {-1, -1}},
-        {"L", {-1, 0}},
-        {"UL", {-1, 1}},
-    };
-    std::unordered_map<std::string, Direction> Tank::stringToDirection = {
-        {"U", Direction::U},
-        {"UR", Direction::UR},
-        {"R", Direction::R},
-        {"DR", Direction::DR},
-        {"D", Direction::D},
-        {"DL", Direction::DL},
-        {"L", Direction::L},
-        {"UL", Direction::UL},
-    };
-
-private:
-    int id;
-    int xTankPosition;
-    int yTankPosition;
-    int artilleryShells;
-    Direction direction;
-    bool destroyed;
-    Game *game;
-
-public:
-    Tank(int n, int x, int y, Direction d, Game *g)
+    void gameManager()
     {
-        id = n;
-        xTankPosition = x;
-        yTankPosition = y;
-        artilleryShells = 16;
-        direction = d;
-        destroyed = false;
-        game = g;
-    }
-
-    int getId()
-    {
-        return id;
-    }
-
-    void setDirection(std::string direction)
-    {
-        if (stringToDirection.find(direction) != stringToDirection.end())
+        std::string move;
+        int count = 0;
+        while (true)
         {
-            this->direction = stringToDirection[direction]; // Access the value directly
-        }
-        else
-        {
-            std::cerr << "Invalid direction string: " << direction << std::endl;
-        }
-    }
-
-    void setPosition(std::string direction)
-    {
-        std::array<int, 2> directions = stringToIntDirection[direction];
-        xTankPosition += directions[0] % game->getWidth();
-        yTankPosition += directions[1] % game->getHeight();
-    }
-
-    void rotateTank(double angle)
-    {
-        direction += angle;
-    }
-
-    int getTankPositionX()
-    {
-        return xTankPosition;
-    }
-
-    int getTankPositionY()
-    {
-        return yTankPosition;
-    }
-
-    void fire()
-    {
-        artilleryShells -= 1;
-        Artillery shellFired = Artillery(xTankPosition, yTankPosition, id, direction, game);
-        game->addArtillery(shellFired);
-        std::cout << "Artillery fired!" << std::endl;
-        shellFired.fire();
-    }
-
-    void hit()
-    {
-        destroyed = true;
-        game->removeTank(id);
-        std::cout << "Tank " << id << " was destroyed!" << std::endl;
-    }
-};
-
-class Artillery
-{
-private:
-    int x, y;
-    int id;
-    Direction dir;
-    Game *game;
-
-public:
-    Artillery(int x, int y, int id, Direction dir, Game *game)
-    {
-        this->x = x;
-        this->y = y;
-        this->id = id;
-        this->dir = dir;
-        this->game = game;
-    }
-
-    void fire()
-    {
-        int w, h;
-
-        w = game->getWidth();
-        h = game->getHeight();
-        int i = 0;
-
-        if (dir == U)
-        {
-
-            y = (y - 1) % h;
-        }
-        else if (dir == UR)
-        {
-            y = (y - 1) % h;
-            x = (x + 1) % w;
-        }
-        else if (dir == R)
-        {
-            x = (x + 1) % w;
-        }
-        else if (dir == DR)
-        {
-            y = (y + 1) % h;
-            x = (x + 1) % w;
-        }
-        else if (dir == D)
-        {
-            y = (y + 1) % h;
-        }
-        else if (dir == DL)
-        {
-            y = (y + 1) % h;
-            x = (x - 1) % w;
-        }
-        else if (dir == L)
-        {
-            x = (x - 1) % w;
-        }
-        else if (dir == UL)
-        {
-            y = (y - 1) % h;
-            x = (x - 1) % w;
-        }
-
-        if (game->getWalls().find(std::make_pair(x, y)) != game->getWalls().end())
-        {
-            std::cout << "Wall at " << x << ', ' << y << " hit!" << std::endl;
-            game->hitWall(x, y);
-        }
-        else
-        {
-            for (const auto &pair : game->getTanks())
+            std::cout << "Game step: " << gameStep << std::endl;
+            for (const auto &pair : tanks)
             {
+                int id = pair.first;
                 Tank tank = pair.second;
-                if (tank.getTankPositionX() == x && tank.getTankPositionY() == y)
+                std::cout << "Tank " << tank.getId() << " move:" << std::endl;
+                std::cin >> move;
+                if (tank.getCantShoot() > 0)
                 {
-                    std::cout << "Tank at " << x << ', ' << y << " hit!" << std::endl;
-                    game->hitTank(pair.first, tank);
+                    tank.incrementCantShoot();
+                    if (tank.getCantShoot() == 4)
+                    {
+                        tank.resetCantShoot();
+                    }
+                }
+                if (tank.getReverse() == 2)
+                {
+                    tank.moveBackwards();
+                    tank.incrementReverse();
+                    continue;
+                }
+
+                if (move == "w")
+                {
+                    if (tank.getReverse() > 0)
+                    {
+                        tank.resetReverse();
+                    }
+                    else
+                    {
+                        tank.moveForward();
+                    }
+                }
+                else if (tank.getReverse() == 1)
+                {
+                    continue;
+                }
+                else if (move == "s")
+                {
+                    if (tank.getReverse() > 2)
+                    {
+                        tank.moveBackwards();
+                    }
+                    tank.incrementReverse();
+                }
+
+                else if (move == "q")
+                {
+                    tank.rotateTank(-0.125);
+                }
+                else if (move == "a")
+                {
+                    tank.rotateTank(-0.25);
+                }
+                else if (move == "e")
+                {
+                    tank.rotateTank(0.125);
+                }
+                else if (move == "d")
+                {
+                    tank.rotateTank(0.25);
+                }
+                else if (move == " ")
+                {
+                    if (tank.canShoot())
+                    {
+                        tank.fire();
+                        totalShellsRemaining--;
+                        std::cout << "Tank " << tank.getId() << " fired!" << std::endl;
+                        tank.incrementCantShoot();
+                    }
+                    else
+                    {
+                        std::cout << "Tank " << tank.getId() << " can't shoot!" << std::endl;
+                    }
                 }
             }
+
+            if (totalShellsRemaining == 0)
+            {
+                count++;
+                if (count == 40)
+                {
+                    std::cout << "Game Over! It's a tie!" << std::endl;
+                    return;
+                }
+            }
+            for (const auto &pair : tanks)
+            {
+                int id = pair.first;
+                Tank tank1 = pair.second;
+                for (const auto &pair2 : tanks)
+                {
+                    int id2 = pair2.first;
+                    Tank tank2 = pair2.second;
+                    if (tank1.getTankPositionX() == tank2.getTankPositionX() && tank1.getTankPositionY() == tank2.getTankPositionY())
+                    {
+                        std::cout << "Tank " << tank1.getId() << " and Tank " << tank2.getId() << " collided!" << std::endl;
+                        tank1.hit();
+                        tank2.hit();
+                    }
+                }
+            }
+            if (tanks.size() == 1)
+            {
+                std::cout << "Game Over! Player " << tanks.begin()->first << " wins!" << std::endl;
+                return;
+            }
+            if (tanks.size() == 0)
+            {
+                std::cout << "Game Over!  It's a tie!" << std::endl;
+                return;
+            }
+
+            gameStep++;
         }
     }
 };
-
-struct Wall
-{
-    int x, y;
-    short health;
-} typedef Wall;
 
 int main()
 {
-    Game game = Game("game.txt");
+    std::string fileName;
+    std::cout << "Enter the name of the file: ";
+    std::cin >> fileName;
+    Game game = Game(fileName);
     std::cout << "Game initialized!" << std::endl;
-
+    game.gameManager();
+    std::cout << "Game ended!" << std::endl;
     return 0;
 }
