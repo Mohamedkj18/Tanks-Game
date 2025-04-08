@@ -1,17 +1,13 @@
+#pragma once
 
-
-#include <iostream>
-#include <set>
-#include <utility>
-#include <array>
 #include <unordered_map>
 #include <vector>
 #include <string>
-#include <fstream>
+#include <array>
+#include <set>
+#include <utility>
 
-class Game;
-class Artillery;
-class TankShellAbstract;
+// ========================= ENUMS & STRUCTS =========================
 
 enum Direction
 {
@@ -42,8 +38,20 @@ struct pair_hash
     }
 };
 
-extern std::unordered_map<Direction, std::array<int, 2>> directionToDelta;
+// ========================= GLOBAL VARS =========================
+
+extern std::unordered_map<Direction, std::array<int, 2>> stringToIntDirection;
 extern std::unordered_map<std::string, Direction> stringToDirection;
+
+Direction &operator+=(Direction &dir, double angle);
+
+// ========================= FORWARD DECLARATIONS =========================
+
+class Game;
+class Tank;
+class Artillery;
+
+// ========================= CLASS: Tank =========================
 
 class Tank
 {
@@ -54,52 +62,79 @@ private:
     int artilleryShells;
     Direction direction;
     bool destroyed;
-    int reverse = 0;
     Game *game;
-    int cantShoot = 0;
+    int cantShoot;
+
+    int reverseCharge = 0;
+    bool reverseQueued = false;
+    bool reverseReady = false;
 
 public:
-    Tank() = default;
-    Tank(int n, int x, int y, Direction d, Game *g);
+    Tank(int id, int x, int y, Direction dir, Game *game);
 
-    int getId() const;
-    void fire();
-    void hit();
+    // Position and state
+    int getId();
+    int getTankPositionX();
+    int getTankPositionY();
+    Direction getDirection();
+
+    // Movement
     void moveForward();
     void moveBackwards();
     void rotateTank(double angle);
-    int getTankPositionX() const;
-    int getTankPositionY() const;
-    void incrementReverse();
-    void resetReverse();
-    int getReverse() const;
+    void setDirection(std::string directionStr);
+
+    // Firing
+    void fire();
+
+    // Damage
+    void hit();
+
+    // Shooting cooldown
     void incrementCantShoot();
     void resetCantShoot();
-    bool canShoot() const;
-    int getCantShoot() const;
+    bool canShoot();
+    int getCantShoot();
+
+    // 🔁 Reverse state
+    bool isReverseQueued() const;
+    bool isReverseReady() const;
+    int getReverseCharge() const;
+    void queueReverse();
+    void cancelReverse();
+    void incrementReverseCharge();
+    void resetReverseState();
+    void executeReverse();
+    void endReverseStreak();
 };
+
+// ========================= CLASS: Artillery =========================
 
 class Artillery
 {
 private:
-    int x, y, id;
+    int x, y;
+    int id;
     Direction dir;
     Game *game;
     Tank *tank;
 
 public:
-    Artillery() = default;
     Artillery(int x, int y, int id, Direction dir, Game *game, Tank *tank);
-    void fire();
-    int getId() const;
-    int getX() const;
-    int getY() const;
-    Direction getDirection() const;
+
+    int getId();
+    int getX();
+    int getY();
+    Direction getDirection();
+
     void setX(int x);
     void setY(int y);
     void setDirection(Direction dir);
     void setId(int id);
+    void fire();
 };
+
+// ========================= CLASS: Game =========================
 
 class Game
 {
@@ -109,31 +144,40 @@ private:
     int gameStep;
     int totalShellsRemaining;
 
-    std::unordered_map<int, Tank> tanks;
-    std::unordered_map<int, Artillery> artilleries;
+    std::unordered_map<int, Tank *> tanks;
+    std::unordered_map<int, Artillery *> artilleries;
+
     std::set<std::pair<int, int>> mines;
     std::unordered_map<std::pair<int, int>, Wall, pair_hash> walls;
 
 public:
     Game(std::string fileName);
-    int getWidth() const;
-    int getHeight() const;
-    int getGameStep() const;
-    std::unordered_map<int, Tank> &getTanks();
-    std::unordered_map<int, Artillery> &getArtillery();
+
+    int getWidth();
+    int getHeight();
+    int getGameStep();
+
+    std::unordered_map<int, Tank *> getTanks();
+    std::unordered_map<int, Artillery *> getArtillery();
     std::set<std::pair<int, int>> &getMines();
     std::unordered_map<std::pair<int, int>, Wall, pair_hash> &getWalls();
+
     void incrementGameStep();
-    void addTank(const Tank &tank);
-    void addArtillery(const Artillery &artillery);
+    void addTank(Tank *tank);
+    void addArtillery(Artillery *artillery);
     void addMine(int x, int y);
     void addWall(int x, int y);
+
     void removeMine(int x, int y);
     void removeWall(int x, int y);
     void removeTank(int tankId);
     void removeArtillery(int artilleryId);
+
     void hitWall(int x, int y);
     void hitTank(int tankId);
-    int readFile(const std::string &fileName);
+
+    int readFile(std::string fileName);
+    std::vector<std::string> splitByComma(const std::string &input);
     void gameManager();
+    void printBoard();
 };
