@@ -39,7 +39,11 @@ public:
 
     void incrementGameStep();
     void addTank(Tank *tank);
-    void addArtillery(Artillery *artillery, std::set<int> &tanksToRemove, std::set<int> &shellsToRemove, std::set<int> &wallllsToRemove, std::unordered_map<int, Tank *> tanks);
+    void addArtillery(Artillery *artillery,
+                      std::set<int> &tanksToRemove,
+                      std::set<int> &shellsToRemove,
+                      std::set<int> &wallsToRemove,
+                      std::unordered_map<int, Tank *> &tanks);
     void addMine(int x, int y);
     void addWall(int x, int y);
 

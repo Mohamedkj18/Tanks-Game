@@ -16,6 +16,11 @@ void Tank::setLastMove(std::string lastMoveStr)
     lastMove = lastMoveStr;
 }
 
+Direction Tank::getDirection()
+{
+    return direction;
+}
+
 void Tank::ignoreMove()
 {
     lastMove = "x";

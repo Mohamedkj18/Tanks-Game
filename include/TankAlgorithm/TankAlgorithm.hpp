@@ -1,27 +1,11 @@
-// include/TankAlgorithm/TankAlgorithm.h
 #pragma once
 
-#include <string>
+#include "Core/Game.hpp"
+#include "Core/Tank.hpp"
 
-// Forward declarations to avoid circular includes
-class Tank;
-class Game;
-
-/**
- * Abstract base class for all tank control algorithms.
- */
 class TankAlgorithm
 {
 public:
-    /**
-     * Decides the next action the tank should take.
-     * This should return a string like:
-     * "MOVE_FORWARD", "MOVE_BACKWARD", "ROTATE_LEFT", "ROTATE_RIGHT", "SHOOT", "DO_NOTHING", etc.
-     */
-    virtual std::string decideAction(Tank *tank, Game *game) = 0;
-
-    /**
-     * Virtual destructor (must match derived classes)
-     */
-    virtual ~TankAlgorithm() noexcept = default;
+    virtual std::string computeMove(Tank *self, Tank *opponent, Game *game) = 0;
+    virtual ~TankAlgorithm() = default;
 };
