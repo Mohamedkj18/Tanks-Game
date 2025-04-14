@@ -2,6 +2,7 @@
 
 #include "Core/GameObject.hpp"
 #include <string>
+#include <set>
 
 // ========================= CLASS: Tank =========================
 
@@ -33,7 +34,7 @@ public:
     void setLastMove(std::string lastMoveStr);
 
     // Firing
-    void fire();
+    void fire(std::set<int> &tanksToRemove, std::set<int> &shellsToRemove, std::set<int> &wallsToRemove, std::unordered_map<int, Tank *> tanks);
 
     // Damage
     void hit();

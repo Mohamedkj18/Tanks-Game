@@ -2,7 +2,6 @@
 #include "Core/Direction.hpp"
 
 class Game; // Forward declaration
-
 // ========================= CLASS: GameObject =========================
 class GameObject
 {

@@ -9,9 +9,7 @@
 
 class Tank;
 class Artillery;
-
 // ========================= CLASS: Game =========================
-
 class Game
 {
 private:
@@ -41,7 +39,7 @@ public:
 
     void incrementGameStep();
     void addTank(Tank *tank);
-    void addArtillery(Artillery *artillery);
+    void addArtillery(Artillery *artillery, std::set<int> &tanksToRemove, std::set<int> &shellsToRemove, std::set<int> &wallllsToRemove, std::unordered_map<int, Tank *> tanks);
     void addMine(int x, int y);
     void addWall(int x, int y);
 
@@ -57,5 +55,4 @@ public:
     std::vector<std::string> splitByComma(const std::string &input);
     void gameManager();
     void printBoard();
-    // void moveAndCheckArtillery(std::unordered_map<int, Artillery *> &newMap, std::set<int> &tanksToRemove);
 };

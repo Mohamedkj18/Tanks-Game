@@ -62,13 +62,13 @@ void Tank::rotateTank(double angle)
     direction += angle;
 }
 
-void Tank::fire()
+void Tank::fire(std::set<int> &tanksToRemove, std::set<int> &shellsToRemove, std::set<int> &wallsToRemove, std::unordered_map<int, Tank *> tanks)
 {
     artilleryShells -= 1;
     Artillery *shell = new Artillery(x, y, direction, game);
     shell->moveForward();
-
-    game->addArtillery(shell);
+    shell->moveForward();
+    game->addArtillery(shell, tanksToRemove, shellsToRemove, wallsToRemove, tanks);
     std::cout << "Artillery fired!" << std::endl;
 }
 

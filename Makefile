@@ -6,7 +6,7 @@ CXXFLAGS = -std=c++17 -Iinclude -Wall -Wextra
 SRC_DIR = src/Core
 INCLUDE_DIR = include/Core
 OBJ_DIR = obj
-BIN = game
+BIN = tankgame
 
 # === Source and Object Files ===
 SRCS = $(wildcard $(SRC_DIR)/*.cpp)
