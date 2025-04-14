@@ -4,7 +4,6 @@
 class Game; // Forward declaration
 
 // ========================= CLASS: GameObject =========================
-
 class GameObject
 {
 protected:

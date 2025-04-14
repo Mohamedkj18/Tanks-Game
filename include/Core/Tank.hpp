@@ -49,9 +49,8 @@ public:
     bool isReverseReady() const;
     int getReverseCharge() const;
     void queueReverse();
-    void cancelReverse();
     void incrementReverseCharge();
     void resetReverseState();
     void executeReverse();
-    void endReverseStreak();
+    void ignoreMove();
 };

@@ -57,4 +57,5 @@ public:
     std::vector<std::string> splitByComma(const std::string &input);
     void gameManager();
     void printBoard();
+    // void moveAndCheckArtillery(std::unordered_map<int, Artillery *> &newMap, std::set<int> &tanksToRemove);
 };

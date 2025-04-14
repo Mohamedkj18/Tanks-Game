@@ -9,6 +9,9 @@ std::unordered_map<std::string, Direction> stringToDirection = {
 std::unordered_map<Direction, Direction> reverseDirection = {
     {U, D}, {UR, DL}, {R, L}, {DR, UL}, {D, U}, {DL, UR}, {L, R}, {UL, DR}};
 
+std::unordered_map<std::string, double> stringToAngle = {
+    {"a", -0.25}, {"d", 0.25}, {"q", -0.125}, {"e", 0.125}, {"x", 0.0}};
+
 Direction &operator+=(Direction &dir, double angle)
 {
     std::array<Direction, 8> directions = {U, UR, R, DR, D, DL, L, UL};

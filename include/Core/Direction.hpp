@@ -42,5 +42,6 @@ struct pair_hash
 extern std::unordered_map<Direction, std::array<int, 2>> stringToIntDirection;
 extern std::unordered_map<std::string, Direction> stringToDirection;
 extern std::unordered_map<Direction, Direction> reverseDirection;
+extern std::unordered_map<std::string, double> stringToAngle;
 
 Direction &operator+=(Direction &dir, double angle);

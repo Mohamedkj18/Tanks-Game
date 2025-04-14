@@ -5,6 +5,8 @@
 #include <fstream>
 #include <cmath>
 
+// ------------------------ Game ------------------------
+
 Game::Game(std::string fileName)
 {
     std::cout << "Game started!" << std::endl;
@@ -99,6 +101,7 @@ std::vector<std::string> Game::splitByComma(const std::string &input)
     std::vector<std::string> tokens;
     size_t start = 0;
     size_t end = input.find(',');
+
     while (end != std::string::npos)
     {
         tokens.push_back(input.substr(start, end - start));
@@ -106,6 +109,7 @@ std::vector<std::string> Game::splitByComma(const std::string &input)
         end = input.find(',', start);
     }
     tokens.push_back(input.substr(start));
+
     return tokens;
 }
 
@@ -169,7 +173,7 @@ void Game::gameManager()
     std::string move;
     std::unordered_map<std::string, double> stringToAngle = {{"a", -0.25}, {"d", 0.25}, {"q", -0.125}, {"e", 0.125}, {"x", 0}};
     int count = 0;
-    int i;
+    int i, x, y;
     int currTankPos;
     bool didItMove;
 
@@ -178,6 +182,7 @@ void Game::gameManager()
         std::cout << "Game step: " << gameStep << std::endl;
         printBoard();
         std::set<int> wallsToRemove;
+
         for (i = 0; i < 2; i++)
         {
             // printBoard();
@@ -211,6 +216,7 @@ void Game::gameManager()
             for (const auto pair : tanks)
             {
                 Tank *tank = pair.second;
+
                 if (!i)
                 {
                     std::cout << "Tank " << tank->getId() << " move: ";
@@ -230,59 +236,46 @@ void Game::gameManager()
                     if (tank->getCantShoot() == 4)
                         tank->resetCantShoot();
                 }
-
-                // Reverse charging in progress
-                if (tank->isReverseQueued())
+                if (tank->isReverseQueued() || move == "s")
                 {
-                    if (move == "w" && !i)
+                    if (tank->isReverseQueued())
                     {
-                        tank->cancelReverse();
-                        tank->endReverseStreak();
-                        std::cout << "Reverse canceled by forward request. Tank stays in place.\n";
+                        if (!i)
+                            tank->incrementReverseCharge();
+                        if (tank->isReverseReady())
+                            tank->executeReverse();
                     }
-                    else
+
+                    else if (move == "s")
+
                     {
-                        std::cout << "Ignoring action during reverse charge...\n";
-                        if (tank->getReverseCharge() == 2)
+                        tank->queueReverse();
+                        if (!i)
+                            tank->incrementReverseCharge();
+                        std::cout << "Tank " << tank->getId() << " queued reverse!\n";
+                        if (tank->isReverseReady())
                         {
                             tank->executeReverse();
                         }
-                        else
-                        {
-                            tank->incrementReverseCharge();
-                            std::cout << "Reverse charging: step " << tank->getReverseCharge() << "/3\n";
-                        }
                     }
-                    continue;
-                }
-
-                // Reverse request
-                if (move == "s")
-                {
-                    if (tank->isReverseQueued() && !i)
+                    x = tank->getX();
+                    y = tank->getY();
+                    if (mines.count(bijection(x, y)))
                     {
-                        std::cout << "Ignoring additional reverse request: already charging.\n";
+                        std::cout << "Tank " << tank->getId() << " hit a mine at " << x << ", " << y << "!\n";
+                        removeMine(bijection(x, y));
+                        tanksToRemove.insert(tank->getId());
                     }
-                    else if (tank->isReverseReady())
-                    {
-                        tank->executeReverse();
-                    }
-                    else if (!i)
-                    {
-                        tank->queueReverse();
-                        std::cout << "Reverse queued.\n";
-                    }
-                    continue;
                 }
 
                 // Forward move cancels reverse streak
-                if (move == "w")
+                else if (move == "w")
                 {
+
                     tank->resetReverseState();
-                    tank->endReverseStreak();
                     tank->moveForward();
-                    int x = tank->getX();
-                    int y = tank->getY();
+                    x = tank->getX();
+                    y = tank->getY();
                     if (mines.count(bijection(x, y)))
                     {
                         std::cout << "Tank " << tank->getId() << " hit a mine at " << x << ", " << y << "!\n";
@@ -292,9 +285,10 @@ void Game::gameManager()
                     }
                 }
                 // Shooting cancels reverse streak
+
                 else if (move == "t")
                 {
-                    tank->endReverseStreak();
+                    tank->resetReverseState();
                     if (tank->canShoot())
                     {
                         tank->fire();
@@ -307,10 +301,11 @@ void Game::gameManager()
                         std::cout << "Tank " << tank->getId() << " can't shoot yet!\n";
                     }
                 }
+
                 else
                 {
                     std::cout << "Tank " << tank->getId() << " rotating to " << move << std::endl;
-                    tank->endReverseStreak();
+                    tank->resetReverseState();
                     tank->rotateTank(stringToAngle[move]);
                 }
                 currTankPos = bijection(tank->getX(), tank->getY());
@@ -328,6 +323,7 @@ void Game::gameManager()
             {
                 removeArtillery(object);
             }
+
             for (int wall : wallsToRemove)
             {
                 removeWall(wall);
@@ -340,11 +336,13 @@ void Game::gameManager()
             std::cout << "Game Over! Player " << tanks.begin()->first << " wins!\n";
             return;
         }
+
         else if (tanks.empty())
         {
             std::cout << "Game Over! It's a tie!\n";
             return;
         }
+
         else if (totalShellsRemaining == 0)
         {
             count++;
@@ -354,6 +352,7 @@ void Game::gameManager()
                 return;
             }
         }
+
         gameStep++;
     }
 }
@@ -363,7 +362,7 @@ void Game::printBoard()
     std::vector<std::vector<char>> board(height, std::vector<char>(width, '.'));
     std::pair<int, int> xy;
     // Add walls
-    for (const auto &pair : walls)
+    for (auto &pair : walls)
     {
         int x = pair.second.x / 2;
         int y = pair.second.y / 2;
@@ -371,7 +370,7 @@ void Game::printBoard()
     }
 
     // Add mines
-    for (const auto &mine : mines)
+    for (auto &mine : mines)
     {
         xy = inverseBijection(mine);
         int x = xy.first / 2;
@@ -380,7 +379,7 @@ void Game::printBoard()
     }
 
     // Add artillery
-    for (const auto &pair : artilleries)
+    for (auto &pair : artilleries)
     {
         Artillery *a = pair.second;
         int x = a->getX() / 2;
@@ -389,12 +388,12 @@ void Game::printBoard()
     }
 
     // Add tanks
-    for (const auto &pair : tanks)
+    for (auto &pair : tanks)
     {
         Tank *tank = pair.second;
         int x = tank->getX() / 2;
         int y = tank->getY() / 2;
-        char symbol = '0' + (tank->getId() % 10);
+        char symbol = '0' + (tank->getId() % 10); // Single-digit tank ID
         board[y][x] = symbol;
     }
 

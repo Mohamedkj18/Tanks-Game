@@ -3,6 +3,8 @@
 #include <iostream>
 #include <unordered_map>
 
+// ------------------------ Artillery ------------------------
+
 Artillery::Artillery(int x, int y, Direction dir, Game *game)
     : MovingGameObject(x, y, dir, game) {}
 

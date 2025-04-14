@@ -2,6 +2,8 @@
 #include "Core/Game.hpp"
 #include "Core/Direction.hpp"
 
+// ------------------------ MovingGameObject ------------------------
+
 bool MovingGameObject::moveForward()
 {
     updatePosition(direction);

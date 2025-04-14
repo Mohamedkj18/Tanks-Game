@@ -33,6 +33,7 @@ $(OBJ_DIR):
 
 # === Clean build artifacts ===
 clean:
-	rm -f $(OBJ_DIR)/*.o main.o $(BIN)
+	del /Q $(OBJ_DIR)\*.o main.o $(BIN).exe 2>NUL
+
 
 .PHONY: all clean

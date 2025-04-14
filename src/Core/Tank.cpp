@@ -2,10 +2,10 @@
 #include "Core/Artillery.hpp"
 #include "Core/Game.hpp"
 #include <iostream>
+// ------------------------ Tank ------------------------
 
 Tank::Tank(int x, int y, Direction d, Game *g, int id)
-    : MovingGameObject(x, y, d, g), id(id), artilleryShells(16), destroyed(false),
-      cantShoot(0) {}
+    : MovingGameObject(x, y, d, g), id(id), artilleryShells(16), destroyed(false), cantShoot(0) {}
 
 int Tank::getId() { return id; }
 
@@ -14,6 +14,11 @@ std::string Tank::getLastMove() { return lastMove; }
 void Tank::setLastMove(std::string lastMoveStr)
 {
     lastMove = lastMoveStr;
+}
+
+void Tank::ignoreMove()
+{
+    lastMove = "x";
 }
 
 void Tank::setDirection(std::string directionStr)
@@ -38,8 +43,7 @@ void Tank::moveBackwards()
 bool Tank::checkForAWall()
 {
     updatePosition(direction);
-    std::cout << "Tank " << id << " checking for a wall at " << (int)x / 2 << ", "
-              << (int)y / 2 << std::endl;
+    std::cout << "Tank " << id << " checking for a wall at " << (int)x / 2 << ", " << (int)y / 2 << std::endl;
     if (game->getWalls().count(game->bijection(x, y)) == 1)
     {
         std::cout << "Tank " << id << " hit a wall at " << (int)x / 2 << ", " << (int)y / 2 << "!\n";
@@ -83,9 +87,7 @@ bool Tank::canShoot() { return cantShoot == 0; }
 int Tank::getCantShoot() { return cantShoot; }
 
 int Tank::getReverseCharge() const { return reverseCharge; }
-
 bool Tank::isReverseQueued() const { return reverseQueued; }
-
 bool Tank::isReverseReady() const { return reverseReady; }
 
 void Tank::queueReverse()
@@ -94,16 +96,12 @@ void Tank::queueReverse()
     reverseCharge = 1;
 }
 
-void Tank::cancelReverse()
-{
-    reverseQueued = false;
-    reverseCharge = 0;
-}
-
 void Tank::incrementReverseCharge()
 {
     if (reverseCharge < 3)
         reverseCharge++;
+    else
+        reverseReady = true;
 }
 
 void Tank::resetReverseState()
@@ -118,10 +116,6 @@ void Tank::executeReverse()
     moveBackwards();
     reverseQueued = false;
     reverseCharge = 0;
+    lastMove = "s";
     reverseReady = true;
-}
-
-void Tank::endReverseStreak()
-{
-    reverseReady = false;
 }

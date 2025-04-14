@@ -1,13 +1,19 @@
-#include <iostream>
-#include "Core/Game.hpp"
 
-int main()
+#include "Core/Game.hpp"
+#include <iostream>
+#include <fstream>
+
+int main(int argc, char *argv[])
 {
-    std::string fileName;
-    std::cout << "Enter the map file name: ";
-    std::cin >> fileName;
-    Game game(fileName);
+    if (argc != 2)
+    {
+        std::cerr << "Usage: tankgame <input_file>" << std::endl;
+        return 1;
+    }
+
+    std::string inputFile = argv[1];
+    Game game(inputFile);
+
     game.gameManager();
-    std::cout << "Game ended!" << std::endl;
     return 0;
 }
