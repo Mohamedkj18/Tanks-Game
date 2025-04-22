@@ -50,7 +50,7 @@ std::pair<int, int> Game::inverseBijection(int z)
     return {x, y};
 }
 
-void Game::addArtillery(Artillery *artillery, std::set<int> &tanksToRemove, std::set<int> &shellsToRemove, std::set<int> &wallsToRemove, std::unordered_map<int, Tank *> secondaryTanks)
+void Game::addArtillery(Artillery *artillery)
 {
     int newPos = bijection(artillery->getX(), artillery->getY());
     if (secondaryTanks.count(newPos))
@@ -214,7 +214,7 @@ void Game::gameManager()
     {
         std::cout << "Game step: " << gameStep << std::endl;
         printBoard();
-        std::set<int> wallsToRemove;
+        wallsToRemove.clear();
 
         for(auto &pair : tanks){
             std::cout << "Tank " << pair.second->getId() << " move: ";
@@ -225,10 +225,10 @@ void Game::gameManager()
         for(j=0;j<3;j++){
         for(i=0;i<2;i++){
         //printBoard();
-        std::set<int> tanksToRemove;
-        std::set<int> shellsToRemove;
-        std::unordered_map<int, Artillery *> secondaryArtilleries;
-        std::unordered_map<int, Tank*> secondaryTanks;
+        tanksToRemove.clear();
+        shellsToRemove.clear();
+        secondaryArtilleries.clear();
+        secondaryTanks.clear();
         
         if(j!=1){
         for(const auto &pair:artilleries){
@@ -309,7 +309,7 @@ void Game::gameManager()
                 tank->resetReverseState();
                 if (tank->canShoot())
                 {
-                    tank->fire(tanksToRemove, shellsToRemove, wallsToRemove, secondaryTanks);
+                    tank->fire();
                     totalShellsRemaining--;
                     std::cout << "Tank " << tank->getId() << " fired!\n";
                     tank->incrementCantShoot();

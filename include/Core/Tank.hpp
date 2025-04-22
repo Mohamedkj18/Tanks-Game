@@ -34,7 +34,7 @@ public:
     void setLastMove(std::string lastMoveStr);
 
     // Firing
-    void fire(std::set<int> &tanksToRemove, std::set<int> &shellsToRemove, std::set<int> &wallsToRemove, std::unordered_map<int, Tank *> tanks);
+    void fire();
 
     // Damage
     void hit();

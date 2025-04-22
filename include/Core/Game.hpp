@@ -17,11 +17,17 @@ private:
     int height;
     int gameStep;
     int totalShellsRemaining;
+    
 
     std::unordered_map<int, Tank *> tanks;
     std::unordered_map<int, Artillery *> artilleries;
     std::set<int> mines;
     std::unordered_map<int, Wall> walls;
+    std::set<int> wallsToRemove;
+    std::set<int> tanksToRemove;
+    std::set<int> shellsToRemove;
+    std::unordered_map<int, Artillery *> secondaryArtilleries;
+    std::unordered_map<int, Tank*> secondaryTanks;
 
 public:
     Game(std::string fileName);
@@ -39,7 +45,7 @@ public:
 
     void incrementGameStep();
     void addTank(Tank *tank);
-    void addArtillery(Artillery *artillery, std::set<int> &tanksToRemove, std::set<int> &shellsToRemove, std::set<int> &wallllsToRemove, std::unordered_map<int, Tank *> tanks);
+    void addArtillery(Artillery *artillery);
     void addMine(int x, int y);
     void addWall(int x, int y);
 
