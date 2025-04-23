@@ -43,6 +43,9 @@ public:
     std::set<int> &getMines();
     std::unordered_map<int, Wall> &getWalls();
 
+
+    void getPlayersInput();
+    int getWallHealth(int wallPos);
     void incrementGameStep();
     void addTank(Tank *tank);
     void addArtillery(Artillery *artillery);
@@ -53,12 +56,30 @@ public:
     void removeWall(int x);
     void removeTank(int tankId);
     void removeArtillery(int artilleryId);
+    void removeTanks();
+    void removeArtilleries();
+    void removeWalls();
 
     void hitWall(int x, int y);
     void hitTank(int tankId);
 
     int readFile(std::string fileName);
     std::vector<std::string> splitByComma(const std::string &input);
+    void checkForAMine(int x, int y);
     void gameManager();
     void printBoard();
+    void advanceArtilleries();
+    void executeTanksMoves();
+    void removeObjectsFromTheBoard();
+    void reverseHandler(Tank *tank, std::string move);
+    void advanceTank(Tank* tank);
+    void tankShootingShells(Tank* tank);
+    void rotateArtillery(Tank* tank);
+    void checkForTankCollision(Tank* tank);
+    void checkForShellCollision(Artillery* artillery);
+    void tankHitByAShell(int tankPos);
+    void artilleryHitAWall(int artilleryPos);
+
+    bool checkForAWinner();
+    bool isItATie();
 };

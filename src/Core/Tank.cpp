@@ -43,15 +43,16 @@ void Tank::moveBackwards()
 bool Tank::checkForAWall()
 {
     updatePosition(direction);
-    std::cout << "Tank " << id << " checking for a wall at " << (int)x / 2 << ", " << (int)y / 2 << std::endl;
     if (game->getWalls().count(game->bijection(x, y)) == 1)
     {
         std::cout << "Tank " << id << " hit a wall at " << (int)x / 2 << ", " << (int)y / 2 << "!\n";
         updatePosition(reverseDirection[direction]);
         lastMove = "x";
+        
         return true;
     }
     updatePosition(reverseDirection[direction]);
+    if(reverseReady)lastMove = "s";
     return false;
 }
 
@@ -98,7 +99,7 @@ void Tank::queueReverse()
 
 void Tank::incrementReverseCharge()
 {
-    if (reverseCharge < 3)
+    if (reverseCharge < 5)
         reverseCharge++;
     else
         reverseReady = true;
@@ -116,6 +117,6 @@ void Tank::executeReverse()
     moveBackwards();
     reverseQueued = false;
     reverseCharge = 0;
-    lastMove = "s";
+    setLastMove("s");
     reverseReady = true;
 }
