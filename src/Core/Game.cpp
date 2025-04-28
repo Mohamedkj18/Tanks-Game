@@ -260,16 +260,37 @@ void Game::checkForAMine(int x, int y){
 
 void Game::tankHitByAShell(int tankPos)
 {
-    outputFile << "Artillery " << artilleries[tankPos] << " hit a tank " << tanks[tankPos]->getId() <<"at " << (int)artilleries[tankPos]->getX() / 2 << ", " << (int)artilleries[tankPos]->getY() / 2 << "!\n";
+    if (artilleries.count(tankPos) && tanks.count(tankPos)) {
+        outputFile << "Artillery hit tank " << tanks[tankPos]->getId()
+                   << " at (" << artilleries[tankPos]->getX() / 2 << ", " << artilleries[tankPos]->getY() / 2 << ")\n";
+    }
+    else if (tanks.count(tankPos)) {
+        outputFile << "Tank " << tanks[tankPos]->getId() << " was hit, but no artillery info available.\n";
+    }
+    else {
+        outputFile << "Unknown hit at position " << tankPos << ". No tank found.\n";
+    }
+
     shellsToRemove.insert(tankPos);
     tanksToRemove.insert(tankPos);
 }
 
+
+
 void Game::artilleryHitAWall(int wallPos)
 {
-    outputFile << "Artillery " << artilleries[wallPos]<< " hit a wall at " << (int)artilleries[wallPos]->getX() / 2 << ", " << (int)artilleries[wallPos]->getY() / 2 << "!\n";
-    if(getWallHealth(wallPos) <= 0)wallsToRemove.insert(wallPos);
+    if (artilleries.count(wallPos)) {
+        outputFile << "Artillery hit wall at (" 
+                   << artilleries[wallPos]->getX() / 2 << ", " << artilleries[wallPos]->getY() / 2 << ")\n";
+    } else {
+        outputFile << "Unknown artillery hit a wall at unknown position.\n";
+    }
+
+    if (getWallHealth(wallPos) <= 0) {
+        wallsToRemove.insert(wallPos);
+    }
 }
+
 
 
 

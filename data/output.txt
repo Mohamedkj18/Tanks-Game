@@ -112,3 +112,7 @@ Tank 2 hit a wall at 12, 6!
 Game step: 36
 Player 1 moved: shoot
 Player 2 moved: forward
+Tank 1 fired!
+Tank 2 hit a wall at 12, 6!
+Tank 2 was hit, but no artillery info available.
+Game Over! Player 1 wins!
