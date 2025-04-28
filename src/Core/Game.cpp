@@ -11,11 +11,10 @@
 std::ofstream outputFile("data/output.txt");
 // ------------------------ Game ------------------------
 
-Game::Game(std::string fileName)
+Game::Game()
 {
-    std::cout << "Game started!" << std::endl;
+    
     gameStep = 0;
-    readFile(fileName);
     totalShellsRemaining = tanks.size() * 16;
 }
 
@@ -105,13 +104,13 @@ void Game::removeWall(int x)
 
 void Game::removeTank(int tankPos)
 {
-    delete tanks[tankPos]; // cleanup
+    delete tanks[tankPos]; 
     tanks.erase(tankPos);
 }
 
 void Game::removeArtillery(int artilleryPos)
 {
-    delete artilleries[artilleryPos]; // cleanup
+    delete artilleries[artilleryPos]; 
     artilleries.erase(artilleryPos);
 }
 
@@ -146,9 +145,9 @@ int Game::readFile(std::string fileName)
 
     int xAxis = 0;
     int yAxis = 0;
-    bool foundErrors = false;             // <--- now declared inside
-    std::ofstream errorsFile;              // <--- now declared inside
-    std::vector<std::string> errorLogs;    // for collecting all error messages
+    bool foundErrors = false;
+    std::ofstream errorsFile;
+    std::vector<std::string> errorLogs;
 
     std::ifstream file(fileName);
     std::string line;
@@ -197,6 +196,9 @@ int Game::readFile(std::string fileName)
                 } else {
                     foundErrors = true;
                     errorLogs.push_back("Ignored extra tank for Player 1 at position (" + std::to_string(xAxis) + "," + std::to_string(yAxis) + ")");
+                    
+                    Tank *redundantTank = new Tank(xAxis * 2, yAxis * 2, stringToDirection["L"], this, 1);
+                    delete redundantTank;  // Prevent memory leak
                 }
             }
             else if (c == '2') {
@@ -207,6 +209,9 @@ int Game::readFile(std::string fileName)
                 } else {
                     foundErrors = true;
                     errorLogs.push_back("Ignored extra tank for Player 2 at position (" + std::to_string(xAxis) + "," + std::to_string(yAxis) + ")");
+                    
+                    Tank *redundantTank = new Tank(xAxis * 2, yAxis * 2, stringToDirection["R"], this, 2);
+                    delete redundantTank;  // Prevent memory leak
                 }
             }
             else if (c != ' ') {
@@ -233,7 +238,7 @@ int Game::readFile(std::string fileName)
     file.close();
 
     if (foundErrors) {
-        errorsFile.open("input_errors.txt");
+        errorsFile.open("data/input_errors.txt");
         errorsFile << "Recovered errors found in input file:\n";
         for (const auto& err : errorLogs) {
             errorsFile << "- " << err << std::endl;
@@ -241,9 +246,17 @@ int Game::readFile(std::string fileName)
         errorsFile.close();
     }
 
+    if (players[0] == nullptr || players[1] == nullptr) {
+        return 1;
+    }
+    
     std::cout << "File read successfully!" << std::endl;
+    printBoard();
     return 0;
 }
+
+
+
 
 
 void Game::checkForAMine(int x, int y){
@@ -485,10 +498,14 @@ void Game::runGame()
     
     int count = 0;
     std::string move;
+
+
     TankChase *tankChase = new TankChase(this, 8);
     TankEvasion *tankEvasion = new TankEvasion(this, 8);
+
     while (true)
     {
+        //printBoard();
         outputFile << "Game step: " << gameStep << std::endl;
         move = tankChase->getNextMove(1,2);
         getPlayer(1)->setLastMove(move);
@@ -513,10 +530,8 @@ void Game::runGame()
         advanceArtilleries();
         removeObjectsFromTheBoard();
 
-
-
-        // Victory conditions
         std::cout << "Game step: " << gameStep << std::endl;
+
         if (checkForAWinner())return;
         else if (isItATie())return;
         else if (totalShellsRemaining == 0)
@@ -537,7 +552,10 @@ void Game::printBoard()
 {
     std::vector<std::vector<char>> board(height, std::vector<char>(width, '.'));
     std::pair<int, int> xy;
-    // Add walls
+
+    std::ofstream visualizationFile("data/visualization.txt");
+    
+    
     for (const auto &pair : walls)
     {
         int x = pair.second.x / 2;
@@ -545,7 +563,7 @@ void Game::printBoard()
         board[y][x] = '#';
     }
 
-    // Add mines
+    
     for (const auto &mine : mines)
     {
         xy = inverseBijection(mine);
@@ -554,7 +572,7 @@ void Game::printBoard()
         board[y][x] = '@';
     }
 
-    // Add artillery
+    
     for (const auto &pair : artilleries)
     {
         Artillery *a = pair.second;
@@ -563,25 +581,26 @@ void Game::printBoard()
         board[y][x] = '*';
     }
 
-    // Add tanks
+    
     for (const auto &pair : tanks)
     {
         Tank *tank = pair.second;
         int x = tank->getX() / 2;
         int y = tank->getY() / 2;
-        char symbol = '0' + (tank->getId() % 10); // Single-digit tank ID
+        char symbol = '0' + (tank->getId() % 10); 
+        std::cout << "Tank ID: " << tank->getId() << ", Symbol: " << symbol << std::endl;
         board[y][x] = symbol;
     }
 
-    // Print the board
-    std::cout << "\n=== Game Step " << gameStep << " ===\n";
+    
+    visualizationFile << "\n=== Game Step " << gameStep << " ===\n";
     for (int y = 0; y < height; ++y)
     {
         for (int x = 0; x < width; ++x)
         {
-            std::cout << board[y][x];
+            visualizationFile << board[y][x];
         }
-        std::cout << '\n';
+        visualizationFile << '\n';
     }
-    std::cout << std::endl;
+    visualizationFile << std::endl;
 }

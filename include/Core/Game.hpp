@@ -37,7 +37,7 @@ protected:
 
 
 public:
-    Game(std::string fileName);
+    Game();
 
     int getWidth();
     int getHeight();

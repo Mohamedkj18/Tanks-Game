@@ -12,7 +12,12 @@ int main(int argc, char *argv[])
     }
 
     std::string inputFile = argv[1];
-    Game game(inputFile);
+    Game game;
+
+    if (game.readFile(inputFile) != 0){
+        std::cerr << "Error reading file: " << inputFile << std::endl;
+        return 1;
+    }
 
     game.runGame();
     return 0;
