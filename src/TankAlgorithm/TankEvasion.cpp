@@ -30,8 +30,8 @@ std::vector<std::pair<int, int>> TankEvasion::getPath(std::pair<int, int> start,
                 path.push_back(current);
                 current = parent[current];
             }
-            path.push_back(start);
             std::reverse(path.begin(), path.end());
+            
             return path;
         }
 
@@ -62,16 +62,6 @@ std::string TankEvasion::getNextMove(int playerNum,int playerToChase) {
     Direction dir = tank->getDirection(); 
     std::array<int,2> target = stringToIntDirection[dir];
     int shouldTheTankMove = isTheSquareSafe(x,y, 4);
-    if(shouldTheTankMove != -1){
-        moveNumToBeExecuted = numOfMovesPerPath;
-        Artillery* artillery = game->getArtillery()[shouldTheTankMove];
-        if(directionToString[artillery->getDirection()] == directionToString[reverseDirection[dir]])return "e";
-        else if(isThereAMineOrAWall((x+target[0]+game->getWidth())%game->getWidth(),(y+target[1]+game->getHeight()))%game->getHeight())return "e";
-        else {
-            fleeingMode = true;
-            return "w";
-        }
-    }
     if(isTheEnemyInRange(playerNum, playerToChase)){
         moveNumToBeExecuted = numOfMovesPerPath;
         return "t";
@@ -82,6 +72,16 @@ std::string TankEvasion::getNextMove(int playerNum,int playerToChase) {
         moveNumToBeExecuted++;
         if(moveNumToBeExecuted == numOfMovesPerPath)fleeingMode = false;
         return move;
+    }
+    else if(shouldTheTankMove != -1){
+        moveNumToBeExecuted = numOfMovesPerPath;
+        Artillery* artillery = game->getArtillery()[shouldTheTankMove];
+        if(directionToString[artillery->getDirection()] == directionToString[reverseDirection[dir]])return "e";
+        else if(isThereAMineOrAWall((x+target[0]+game->getWidth())%game->getWidth(),(y+target[1]+game->getHeight()))%game->getHeight())return "e";
+        else {
+            fleeingMode = true;
+            return "w";
+        }
     }
     else if(isThereATankClose(x,y)){
         fleeingMode = true;

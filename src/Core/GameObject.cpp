@@ -17,7 +17,6 @@ bool MovingGameObject::moveForward()
 
 void MovingGameObject::updatePosition(Direction dir)
 {
-    int switchDirections;
     std::array<int, 2> d = stringToIntDirection[dir];
     x = (x + d[0] + game->getWidth() * 2) % (game->getWidth() * 2);
     y = (y + d[1] + game->getHeight() * 2) % (game->getHeight() * 2);

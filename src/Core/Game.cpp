@@ -9,13 +9,14 @@
 
 
 std::ofstream outputFile("data/output.txt");
+std::ofstream visualizationFile("data/visualization.txt");
 // ------------------------ Game ------------------------
 
 Game::Game()
 {
     
     gameStep = 0;
-    totalShellsRemaining = tanks.size() * 16;
+    totalShellsRemaining = 0;
 }
 
 int Game::getWidth() { return width; }
@@ -141,8 +142,6 @@ std::vector<std::string> Game::splitByComma(const std::string &input)
 
 int Game::readFile(std::string fileName)
 {
-    std::cout << "Reading file: " << fileName << std::endl;
-
     int xAxis = 0;
     int yAxis = 0;
     bool foundErrors = false;
@@ -158,21 +157,18 @@ int Game::readFile(std::string fileName)
         return 1;
     }
 
-    std::cout << "File opened successfully!" << std::endl;
 
     getline(file, line);
     std::vector<std::string> params = splitByComma(line);
     height = std::stoi(params[0]);
     width = std::stoi(params[1]);
     
-    std::cout << "Height: " << height << ", Width: " << width << std::endl;
 
     int declaredHeight = height;
     int declaredWidth = width;
 
     while (std::getline(file, line) && yAxis < declaredHeight)
     {
-        std::cout << "Line: " << line << std::endl;
         xAxis = 0;
         for (char c : line)
         {
@@ -190,6 +186,7 @@ int Game::readFile(std::string fileName)
             }
             else if (c == '1') {
                 if (players[0] == nullptr) {
+                    totalShellsRemaining += 16;
                     Tank *player1 = new Tank(xAxis * 2, yAxis * 2, stringToDirection["L"], this, 1);
                     addTank(player1);
                     players[0] = player1;
@@ -203,6 +200,7 @@ int Game::readFile(std::string fileName)
             }
             else if (c == '2') {
                 if (players[1] == nullptr) {
+                    totalShellsRemaining += 16;
                     Tank *player2 = new Tank(xAxis * 2, yAxis * 2, stringToDirection["R"], this, 2);
                     addTank(player2);
                     players[1] = player2;
@@ -250,7 +248,6 @@ int Game::readFile(std::string fileName)
         return 1;
     }
     
-    std::cout << "File read successfully!" << std::endl;
     printBoard();
     return 0;
 }
@@ -259,11 +256,11 @@ int Game::readFile(std::string fileName)
 
 
 
-void Game::checkForAMine(int x, int y){
+void Game::checkForAMine(int x, int y,int tankId){
     int currTankPos = bijection(x,y);
     if (mines.count(currTankPos))
         {
-        outputFile << "Losing step: Tank " << tanks[currTankPos]->getId() << " hit a mine at " << (int)x / 2 << ", " << (int)y / 2 << "!\n";
+        outputFile << "Losing step: Tank " << tankId << " hit a mine at " << (int)x / 2 << ", " << (int)y / 2 << "!\n";
         removeMine(bijection(x,y));
         tanksToRemove.insert(currTankPos);
     }
@@ -338,7 +335,7 @@ void Game::advanceArtilleries(){
                 tank->executeReverse();
             }
         }
-        checkForAMine(tank->getX(),tank->getY());
+        checkForAMine(tank->getX(),tank->getY(), tank->getId());
     }
 
 
@@ -346,7 +343,7 @@ void Game::advanceArtilleries(){
     {
         tank->resetReverseState();
         tank->moveForward();
-        checkForAMine(tank->getX(),tank->getY());
+        checkForAMine(tank->getX(),tank->getY(), tank->getId());
     }
 
     void Game::tankShootingShells(Tank *tank)
@@ -375,7 +372,7 @@ void Game::checkForTankCollision(Tank *tank)
 {
     int currTankPos = bijection(tank->getX(), tank->getY());
     if(secondaryTanks.count(currTankPos)) {
-        outputFile << "Losing step: Tank " << tanks[currTankPos]->getId() << " hit a tank at " << (int)tank->getX() / 2 << ", " << (int)tank->getY() / 2 << "!\n";
+        outputFile << "Losing step: Tank " << secondaryTanks[currTankPos]->getId() << " hit a tank at " << (int)tank->getX() / 2 << ", " << (int)tank->getY() / 2 << "!\n";
         tanksToRemove.insert(currTankPos);
     }
     if(artilleries.count(currTankPos)){
@@ -396,6 +393,7 @@ void Game::checkForShellCollision(Artillery *artillery)
 
 void Game::executeTanksMoves(){
     std::string move;
+
     for (const auto pair : tanks)
     {
         
@@ -497,15 +495,13 @@ void Game::runGame()
 {
     
     int count = 0;
-    std::string move;
-
-
+    std::string move,n;
     TankChase *tankChase = new TankChase(this, 8);
     TankEvasion *tankEvasion = new TankEvasion(this, 8);
 
     while (true)
     {
-        //printBoard();
+        printBoard();
         outputFile << "Game step: " << gameStep << std::endl;
         move = tankChase->getNextMove(1,2);
         getPlayer(1)->setLastMove(move);
@@ -519,7 +515,7 @@ void Game::runGame()
         removeArtilleries();
         advanceArtilleries();
         removeObjectsFromTheBoard();
-
+        
         executeTanksMoves();
         removeTanks();
         executeTanksMoves();
@@ -529,8 +525,6 @@ void Game::runGame()
         removeArtilleries();
         advanceArtilleries();
         removeObjectsFromTheBoard();
-
-        std::cout << "Game step: " << gameStep << std::endl;
 
         if (checkForAWinner())return;
         else if (isItATie())return;
@@ -553,7 +547,7 @@ void Game::printBoard()
     std::vector<std::vector<char>> board(height, std::vector<char>(width, '.'));
     std::pair<int, int> xy;
 
-    std::ofstream visualizationFile("data/visualization.txt");
+    
     
     
     for (const auto &pair : walls)
@@ -588,7 +582,6 @@ void Game::printBoard()
         int x = tank->getX() / 2;
         int y = tank->getY() / 2;
         char symbol = '0' + (tank->getId() % 10); 
-        std::cout << "Tank ID: " << tank->getId() << ", Symbol: " << symbol << std::endl;
         board[y][x] = symbol;
     }
 

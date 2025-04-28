@@ -12,7 +12,7 @@ std::pair<int, int> TankAlgorithm::move(std::pair<int, int> current, Direction d
 
 
     auto offset = stringToIntDirection[direction];
-    return {(current.first + offset[0]+game->getHeight())%game->getHeight(), (current.second + offset[1]+game->getWidth())%game->getWidth()};
+    return {(current.first + offset[0]+game->getWidth())%game->getWidth(), (current.second + offset[1]+game->getHeight())%game->getHeight()};
 }
 
 
@@ -81,7 +81,7 @@ int TankAlgorithm::getMovesToRotateTank(std::string directionToRotateTo, std::st
         dirToCheck = dir;
         dirToCheck += (angle);
         if(directionToString[dirToCheck] == directionToRotateTo){
-            if(rotate == 0)return 0;
+            if(angle == 0.0)return 0;
 
             else if(angle == 0.125 || angle == 0.25 || angle == 0.875 || angle == 0.75)movesToRotate++;
             else if(angle == 0.375 || angle == 0.5 || angle == 0.625)movesToRotate += 2;

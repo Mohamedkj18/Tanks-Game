@@ -72,7 +72,7 @@ public:
 
     int readFile(std::string fileName);
     std::vector<std::string> splitByComma(const std::string &input);
-    void checkForAMine(int x, int y);
+    void checkForAMine(int x, int y, int tankId);
     void runGame();
     void printBoard();
     void advanceArtilleries();
