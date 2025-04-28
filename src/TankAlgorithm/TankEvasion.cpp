@@ -1,12 +1,7 @@
 #include "TankAlgorithm/TankEvasion.hpp"
 
 
-TankEvasion::TankEvasion(Game *game, int numOfMovesPerPath, int range) { 
-    this->range = range;
-    this->moveToAdd = 0;
-    this->moveNumToBeExecuted = numOfMovesPerPath;
-    this->game = game;
-    this->numOfMovesPerPath = numOfMovesPerPath;
+TankEvasion::TankEvasion(Game *game, int numOfMovesPerPath, int range):TankAlgorithm(game, numOfMovesPerPath, range){ 
     this->fleeingMode = false;
 }
 

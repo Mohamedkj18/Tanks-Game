@@ -1,6 +1,12 @@
 #include "TankAlgorithm/TankAlgorithm.hpp"
 
-
+TankAlgorithm::TankAlgorithm(Game *game, int numOfMovesPerPath, int range){
+    this->range = range;
+    this->moveToAdd = 0;
+    this->moveNumToBeExecuted = numOfMovesPerPath;
+    this->game = game;
+    this->numOfMovesPerPath = numOfMovesPerPath;
+};
 
 std::pair<int, int> TankAlgorithm::move(std::pair<int, int> current, Direction direction) {
 

@@ -264,13 +264,6 @@ void Game::tankHitByAShell(int tankPos)
         outputFile << "Artillery hit tank " << tanks[tankPos]->getId()
                    << " at (" << artilleries[tankPos]->getX() / 2 << ", " << artilleries[tankPos]->getY() / 2 << ")\n";
     }
-    else if (tanks.count(tankPos)) {
-        outputFile << "Tank " << tanks[tankPos]->getId() << " was hit, but no artillery info available.\n";
-    }
-    else {
-        outputFile << "Unknown hit at position " << tankPos << ". No tank found.\n";
-    }
-
     shellsToRemove.insert(tankPos);
     tanksToRemove.insert(tankPos);
 }

@@ -2,13 +2,9 @@
 
 
 
-TankChase::TankChase(Game *game, int numOfMovesPerPath, int range) { 
-    this->range = range;
-    this->moveToAdd = 0;
-    this->moveNumToBeExecuted = numOfMovesPerPath;
-    this->game = game;
-    this->numOfMovesPerPath = numOfMovesPerPath;
-}
+TankChase::TankChase(Game *game, int numOfMovesPerPath, int range):
+    TankAlgorithm(game, numOfMovesPerPath, range){}
+
 
 
 

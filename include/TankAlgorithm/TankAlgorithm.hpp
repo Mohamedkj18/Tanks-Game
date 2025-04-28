@@ -33,6 +33,9 @@ protected:
 
 
 public:
+
+TankAlgorithm(Game *game, int numOfMovesPerPath, int range = 5);
+
 std::pair<int, int> move(std::pair<int, int> current, Direction direction);
 std::string getDirectionFromPosition(std::pair<int, int> current, std::pair<int, int> target);
 void setTheMovesToBeExecuted(int playerNum, int playerToChase);
