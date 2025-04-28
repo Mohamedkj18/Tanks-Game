@@ -6,9 +6,13 @@
 #include <set>
 #include <utility>
 #include "Core/Direction.hpp"
+#include <fstream> 
 
 class Tank;
 class Artillery;
+class  TankChase; 
+
+extern std::ofstream outputFile;
 // ========================= CLASS: Game =========================
 class Game
 {
@@ -18,7 +22,7 @@ private:
     int gameStep;
     int totalShellsRemaining;
     
-
+    std::array<Tank*, 2> players;
     std::unordered_map<int, Tank *> tanks;
     std::unordered_map<int, Artillery *> artilleries;
     std::set<int> mines;
@@ -29,6 +33,9 @@ private:
     std::unordered_map<int, Artillery *> secondaryArtilleries;
     std::unordered_map<int, Tank*> secondaryTanks;
 
+protected:
+
+
 public:
     Game(std::string fileName);
 
@@ -37,14 +44,14 @@ public:
     int getGameStep();
     int bijection(int x, int y);
     std::pair<int, int> inverseBijection(int z);
-
+    Tank* getPlayer(int playerId);
     std::unordered_map<int, Tank *> getTanks();
     std::unordered_map<int, Artillery *> getArtillery();
     std::set<int> &getMines();
     std::unordered_map<int, Wall> &getWalls();
 
 
-    void getPlayersInput();
+    void getPlayersInput(std::ofstream &file);
     int getWallHealth(int wallPos);
     void incrementGameStep();
     void addTank(Tank *tank);
@@ -66,7 +73,7 @@ public:
     int readFile(std::string fileName);
     std::vector<std::string> splitByComma(const std::string &input);
     void checkForAMine(int x, int y);
-    void gameManager();
+    void runGame();
     void printBoard();
     void advanceArtilleries();
     void executeTanksMoves();
@@ -82,4 +89,6 @@ public:
 
     bool checkForAWinner();
     bool isItATie();
+    void outputTankMove(int playerNum, std::string move);
+
 };

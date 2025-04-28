@@ -3,6 +3,8 @@
 #include <iostream>
 #include <unordered_map>
 
+
+
 // ------------------------ Artillery ------------------------
 
 Artillery::Artillery(int x, int y, Direction dir, Game *game)
@@ -16,7 +18,7 @@ bool Artillery::checkForAWall()
     wallPos = game->bijection(x, y);
     if (walls.count(wallPos))
     {
-        std::cout << "Artillery at " << x << ", " << y << "hit a wall!" << std::endl;
+        outputFile << "Artillery at " << x << ", " << y << "hit a wall!" << std::endl;
         currWall = &walls[wallPos];
         currWall->health -= 1;
         updatePosition(direction);

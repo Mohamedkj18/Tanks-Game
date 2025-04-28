@@ -1,8 +1,10 @@
 #pragma once
 
 #include "Core/GameObject.hpp"
+#include "Core/Game.hpp"
 #include <string>
 #include <set>
+
 
 // ========================= CLASS: Tank =========================
 
@@ -24,7 +26,6 @@ public:
     // Position and state
     int getId();
     std::string getLastMove();
-    Direction getDirection();
     bool checkForAWall();
 
     // Movement

@@ -2,6 +2,9 @@
 #include "Core/Artillery.hpp"
 #include "Core/Game.hpp"
 #include <iostream>
+
+
+
 // ------------------------ Tank ------------------------
 
 Tank::Tank(int x, int y, Direction d, Game *g, int id)
@@ -45,7 +48,7 @@ bool Tank::checkForAWall()
     updatePosition(direction);
     if (game->getWalls().count(game->bijection(x, y)) == 1)
     {
-        std::cout << "Tank " << id << " hit a wall at " << (int)x / 2 << ", " << (int)y / 2 << "!\n";
+        outputFile << "Tank " << id << " hit a wall at " << (int)x / 2 << ", " << (int)y / 2 << "!\n";
         updatePosition(reverseDirection[direction]);
         lastMove = "x";
         
@@ -70,7 +73,7 @@ void Tank::fire()
     shell->moveForward();
     shell->moveForward();
     game->addArtillery(shell);
-    std::cout << "Artillery fired!" << std::endl;
+    
 }
 
 void Tank::hit()

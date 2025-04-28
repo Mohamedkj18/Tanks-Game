@@ -1,0 +1,114 @@
+Game step: 0
+Player 1 moved: rotate right by 90 degrees
+Player 2 moved: ignore move
+Game step: 1
+Player 1 moved: rotate right by 45 degrees
+Player 2 moved: ignore move
+Game step: 2
+Player 1 moved: forward
+Player 2 moved: ignore move
+Game step: 3
+Player 1 moved: forward
+Player 2 moved: ignore move
+Game step: 4
+Player 1 moved: forward
+Player 2 moved: ignore move
+Game step: 5
+Player 1 moved: rotate right by 45 degrees
+Player 2 moved: ignore move
+Game step: 6
+Player 1 moved: forward
+Player 2 moved: ignore move
+Game step: 7
+Player 1 moved: rotate left by 45 degrees
+Player 2 moved: ignore move
+Game step: 8
+Player 1 moved: forward
+Player 2 moved: ignore move
+Game step: 9
+Player 1 moved: rotate right by 90 degrees
+Player 2 moved: forward
+Game step: 10
+Player 1 moved: forward
+Player 2 moved: forward
+Game step: 11
+Player 1 moved: forward
+Player 2 moved: rotate left by 45 degrees
+Game step: 12
+Player 1 moved: forward
+Player 2 moved: forward
+Game step: 13
+Player 1 moved: rotate right by 45 degrees
+Player 2 moved: forward
+Game step: 14
+Player 1 moved: forward
+Player 2 moved: forward
+Game step: 15
+Player 1 moved: rotate left by 45 degrees
+Player 2 moved: rotate left by 45 degrees
+Game step: 16
+Player 1 moved: rotate left by 90 degrees
+Player 2 moved: forward
+Game step: 17
+Player 1 moved: rotate left by 45 degrees
+Player 2 moved: rotate right by 45 degrees
+Game step: 18
+Player 1 moved: forward
+Player 2 moved: ignore move
+Game step: 19
+Player 1 moved: rotate right by 45 degrees
+Player 2 moved: ignore move
+Game step: 20
+Player 1 moved: forward
+Player 2 moved: ignore move
+Game step: 21
+Player 1 moved: forward
+Player 2 moved: ignore move
+Game step: 22
+Player 1 moved: forward
+Player 2 moved: ignore move
+Game step: 23
+Player 1 moved: forward
+Player 2 moved: ignore move
+Game step: 24
+Player 1 moved: rotate left by 45 degrees
+Player 2 moved: forward
+Game step: 25
+Player 1 moved: forward
+Player 2 moved: forward
+Game step: 26
+Player 1 moved: forward
+Player 2 moved: rotate left by 45 degrees
+Tank 1 hit a wall at 12, 13!
+Game step: 27
+Player 1 moved: rotate right by 45 degrees
+Player 2 moved: forward
+Game step: 28
+Player 1 moved: forward
+Player 2 moved: forward
+Game step: 29
+Player 1 moved: forward
+Player 2 moved: forward
+Game step: 30
+Player 1 moved: forward
+Player 2 moved: forward
+Game step: 31
+Player 1 moved: forward
+Player 2 moved: rotate left by 45 degrees
+Tank 1 hit a wall at 16, 10!
+Game step: 32
+Player 1 moved: rotate left by 45 degrees
+Player 2 moved: forward
+Game step: 33
+Player 1 moved: forward
+Player 2 moved: ignore move
+Game step: 34
+Player 1 moved: forward
+Player 2 moved: ignore move
+Game step: 35
+Player 1 moved: rotate left by 45 degrees
+Player 2 moved: forward
+Tank 2 hit a wall at 12, 6!
+Game step: 36
+Player 1 moved: shoot
+Player 2 moved: forward

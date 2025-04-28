@@ -14,6 +14,6 @@ int main(int argc, char *argv[])
     std::string inputFile = argv[1];
     Game game(inputFile);
 
-    game.gameManager();
+    game.runGame();
     return 0;
 }
