@@ -1,6 +1,6 @@
 # === Compiler and Flags ===
 CXX = g++
-CXXFLAGS = -std=c++17 -Iinclude -Wall -Wextra
+CXXFLAGS = -std=c++17 -Iinclude -Wall -Wextra -Werror -pedantic 
 
 # === Project Structure ===
 CORE_SRC_DIR = src/Core

@@ -1,0 +1,535 @@
+Game step: 0
+Player 1 moved: rotate right by 90 degrees
+Player 2 moved: ignore move
+Game step: 1
+Player 1 moved: forward
+Player 2 moved: ignore move
+Game step: 2
+Player 1 moved: forward
+Player 2 moved: forward
+Game step: 3
+Player 1 moved: forward
+Player 2 moved: forward
+Game step: 4
+Player 1 moved: forward
+Player 2 moved: forward
+Game step: 5
+Player 1 moved: rotate left by 45 degrees
+Player 2 moved: rotate right by 45 degrees
+Game step: 6
+Player 1 moved: shoot
+Player 2 moved: shoot
+Tank 1 fired!
+Artilleries collided at (5, 1) !
+Tank 2 fired!
+Game step: 7
+Player 1 moved: shoot
+Player 2 moved: shoot
+Bad step: Tank 1 can't shoot!
+Bad step: Tank 2 can't shoot!
+Game step: 8
+Player 1 moved: shoot
+Player 2 moved: shoot
+Bad step: Tank 1 can't shoot!
+Bad step: Tank 2 can't shoot!
+Game step: 9
+Player 1 moved: shoot
+Player 2 moved: shoot
+Bad step: Tank 1 can't shoot!
+Bad step: Tank 2 can't shoot!
+Game step: 10
+Player 1 moved: shoot
+Player 2 moved: shoot
+Tank 1 fired!
+Artilleries collided at (5, 1) !
+Tank 2 fired!
+Game step: 11
+Player 1 moved: shoot
+Player 2 moved: shoot
+Bad step: Tank 1 can't shoot!
+Bad step: Tank 2 can't shoot!
+Game step: 12
+Player 1 moved: shoot
+Player 2 moved: shoot
+Bad step: Tank 1 can't shoot!
+Bad step: Tank 2 can't shoot!
+Game step: 13
+Player 1 moved: shoot
+Player 2 moved: shoot
+Bad step: Tank 1 can't shoot!
+Bad step: Tank 2 can't shoot!
+Game step: 14
+Player 1 moved: shoot
+Player 2 moved: shoot
+Tank 1 fired!
+Artilleries collided at (5, 1) !
+Tank 2 fired!
+Game step: 15
+Player 1 moved: shoot
+Player 2 moved: shoot
+Bad step: Tank 1 can't shoot!
+Bad step: Tank 2 can't shoot!
+Game step: 16
+Player 1 moved: shoot
+Player 2 moved: shoot
+Bad step: Tank 1 can't shoot!
+Bad step: Tank 2 can't shoot!
+Game step: 17
+Player 1 moved: shoot
+Player 2 moved: shoot
+Bad step: Tank 1 can't shoot!
+Bad step: Tank 2 can't shoot!
+Game step: 18
+Player 1 moved: shoot
+Player 2 moved: shoot
+Tank 1 fired!
+Artilleries collided at (5, 1) !
+Tank 2 fired!
+Game step: 19
+Player 1 moved: shoot
+Player 2 moved: shoot
+Bad step: Tank 1 can't shoot!
+Bad step: Tank 2 can't shoot!
+Game step: 20
+Player 1 moved: shoot
+Player 2 moved: shoot
+Bad step: Tank 1 can't shoot!
+Bad step: Tank 2 can't shoot!
+Game step: 21
+Player 1 moved: shoot
+Player 2 moved: shoot
+Bad step: Tank 1 can't shoot!
+Bad step: Tank 2 can't shoot!
+Game step: 22
+Player 1 moved: shoot
+Player 2 moved: shoot
+Tank 1 fired!
+Artilleries collided at (5, 1) !
+Tank 2 fired!
+Game step: 23
+Player 1 moved: shoot
+Player 2 moved: shoot
+Bad step: Tank 1 can't shoot!
+Bad step: Tank 2 can't shoot!
+Game step: 24
+Player 1 moved: shoot
+Player 2 moved: shoot
+Bad step: Tank 1 can't shoot!
+Bad step: Tank 2 can't shoot!
+Game step: 25
+Player 1 moved: shoot
+Player 2 moved: shoot
+Bad step: Tank 1 can't shoot!
+Bad step: Tank 2 can't shoot!
+Game step: 26
+Player 1 moved: shoot
+Player 2 moved: shoot
+Tank 1 fired!
+Artilleries collided at (5, 1) !
+Tank 2 fired!
+Game step: 27
+Player 1 moved: shoot
+Player 2 moved: shoot
+Bad step: Tank 1 can't shoot!
+Bad step: Tank 2 can't shoot!
+Game step: 28
+Player 1 moved: shoot
+Player 2 moved: shoot
+Bad step: Tank 1 can't shoot!
+Bad step: Tank 2 can't shoot!
+Game step: 29
+Player 1 moved: shoot
+Player 2 moved: shoot
+Bad step: Tank 1 can't shoot!
+Bad step: Tank 2 can't shoot!
+Game step: 30
+Player 1 moved: shoot
+Player 2 moved: shoot
+Tank 1 fired!
+Artilleries collided at (5, 1) !
+Tank 2 fired!
+Game step: 31
+Player 1 moved: shoot
+Player 2 moved: shoot
+Bad step: Tank 1 can't shoot!
+Bad step: Tank 2 can't shoot!
+Game step: 32
+Player 1 moved: shoot
+Player 2 moved: shoot
+Bad step: Tank 1 can't shoot!
+Bad step: Tank 2 can't shoot!
+Game step: 33
+Player 1 moved: shoot
+Player 2 moved: shoot
+Bad step: Tank 1 can't shoot!
+Bad step: Tank 2 can't shoot!
+Game step: 34
+Player 1 moved: shoot
+Player 2 moved: shoot
+Tank 1 fired!
+Artilleries collided at (5, 1) !
+Tank 2 fired!
+Game step: 35
+Player 1 moved: shoot
+Player 2 moved: shoot
+Bad step: Tank 1 can't shoot!
+Bad step: Tank 2 can't shoot!
+Game step: 36
+Player 1 moved: shoot
+Player 2 moved: shoot
+Bad step: Tank 1 can't shoot!
+Bad step: Tank 2 can't shoot!
+Game step: 37
+Player 1 moved: shoot
+Player 2 moved: shoot
+Bad step: Tank 1 can't shoot!
+Bad step: Tank 2 can't shoot!
+Game step: 38
+Player 1 moved: shoot
+Player 2 moved: shoot
+Tank 1 fired!
+Artilleries collided at (5, 1) !
+Tank 2 fired!
+Game step: 39
+Player 1 moved: shoot
+Player 2 moved: shoot
+Bad step: Tank 1 can't shoot!
+Bad step: Tank 2 can't shoot!
+Game step: 40
+Player 1 moved: shoot
+Player 2 moved: shoot
+Bad step: Tank 1 can't shoot!
+Bad step: Tank 2 can't shoot!
+Game step: 41
+Player 1 moved: shoot
+Player 2 moved: shoot
+Bad step: Tank 1 can't shoot!
+Bad step: Tank 2 can't shoot!
+Game step: 42
+Player 1 moved: shoot
+Player 2 moved: shoot
+Tank 1 fired!
+Artilleries collided at (5, 1) !
+Tank 2 fired!
+Game step: 43
+Player 1 moved: shoot
+Player 2 moved: shoot
+Bad step: Tank 1 can't shoot!
+Bad step: Tank 2 can't shoot!
+Game step: 44
+Player 1 moved: shoot
+Player 2 moved: shoot
+Bad step: Tank 1 can't shoot!
+Bad step: Tank 2 can't shoot!
+Game step: 45
+Player 1 moved: shoot
+Player 2 moved: shoot
+Bad step: Tank 1 can't shoot!
+Bad step: Tank 2 can't shoot!
+Game step: 46
+Player 1 moved: shoot
+Player 2 moved: shoot
+Tank 1 fired!
+Artilleries collided at (5, 1) !
+Tank 2 fired!
+Game step: 47
+Player 1 moved: shoot
+Player 2 moved: shoot
+Bad step: Tank 1 can't shoot!
+Bad step: Tank 2 can't shoot!
+Game step: 48
+Player 1 moved: shoot
+Player 2 moved: shoot
+Bad step: Tank 1 can't shoot!
+Bad step: Tank 2 can't shoot!
+Game step: 49
+Player 1 moved: shoot
+Player 2 moved: shoot
+Bad step: Tank 1 can't shoot!
+Bad step: Tank 2 can't shoot!
+Game step: 50
+Player 1 moved: shoot
+Player 2 moved: shoot
+Tank 1 fired!
+Artilleries collided at (5, 1) !
+Tank 2 fired!
+Game step: 51
+Player 1 moved: shoot
+Player 2 moved: shoot
+Bad step: Tank 1 can't shoot!
+Bad step: Tank 2 can't shoot!
+Game step: 52
+Player 1 moved: shoot
+Player 2 moved: shoot
+Bad step: Tank 1 can't shoot!
+Bad step: Tank 2 can't shoot!
+Game step: 53
+Player 1 moved: shoot
+Player 2 moved: shoot
+Bad step: Tank 1 can't shoot!
+Bad step: Tank 2 can't shoot!
+Game step: 54
+Player 1 moved: shoot
+Player 2 moved: shoot
+Tank 1 fired!
+Artilleries collided at (5, 1) !
+Tank 2 fired!
+Game step: 55
+Player 1 moved: shoot
+Player 2 moved: shoot
+Bad step: Tank 1 can't shoot!
+Bad step: Tank 2 can't shoot!
+Game step: 56
+Player 1 moved: shoot
+Player 2 moved: shoot
+Bad step: Tank 1 can't shoot!
+Bad step: Tank 2 can't shoot!
+Game step: 57
+Player 1 moved: shoot
+Player 2 moved: shoot
+Bad step: Tank 1 can't shoot!
+Bad step: Tank 2 can't shoot!
+Game step: 58
+Player 1 moved: shoot
+Player 2 moved: shoot
+Tank 1 fired!
+Artilleries collided at (5, 1) !
+Tank 2 fired!
+Game step: 59
+Player 1 moved: shoot
+Player 2 moved: shoot
+Bad step: Tank 1 can't shoot!
+Bad step: Tank 2 can't shoot!
+Game step: 60
+Player 1 moved: shoot
+Player 2 moved: shoot
+Bad step: Tank 1 can't shoot!
+Bad step: Tank 2 can't shoot!
+Game step: 61
+Player 1 moved: shoot
+Player 2 moved: shoot
+Bad step: Tank 1 can't shoot!
+Bad step: Tank 2 can't shoot!
+Game step: 62
+Player 1 moved: shoot
+Player 2 moved: shoot
+Tank 1 fired!
+Artilleries collided at (5, 1) !
+Tank 2 fired!
+Game step: 63
+Player 1 moved: shoot
+Player 2 moved: shoot
+Bad step: Tank 1 can't shoot!
+Bad step: Tank 2 can't shoot!
+Game step: 64
+Player 1 moved: shoot
+Player 2 moved: shoot
+Bad step: Tank 1 can't shoot!
+Bad step: Tank 2 can't shoot!
+Game step: 65
+Player 1 moved: shoot
+Player 2 moved: shoot
+Bad step: Tank 1 can't shoot!
+Bad step: Tank 2 can't shoot!
+Game step: 66
+Player 1 moved: shoot
+Player 2 moved: shoot
+Tank 1 fired!
+Artilleries collided at (5, 1) !
+Tank 2 fired!
+Game step: 67
+Player 1 moved: shoot
+Player 2 moved: shoot
+Bad step: Tank 1 can't shoot!
+Bad step: Tank 2 can't shoot!
+Game step: 68
+Player 1 moved: shoot
+Player 2 moved: shoot
+Bad step: Tank 1 can't shoot!
+Bad step: Tank 2 can't shoot!
+Game step: 69
+Player 1 moved: shoot
+Player 2 moved: shoot
+Bad step: Tank 1 can't shoot!
+Bad step: Tank 2 can't shoot!
+Game step: 70
+Player 1 moved: shoot
+Player 2 moved: shoot
+Bad step: Tank 1 can't shoot!
+Bad step: Tank 2 can't shoot!
+Game step: 71
+Player 1 moved: shoot
+Player 2 moved: shoot
+Bad step: Tank 1 can't shoot!
+Bad step: Tank 2 can't shoot!
+Game step: 72
+Player 1 moved: shoot
+Player 2 moved: shoot
+Bad step: Tank 1 can't shoot!
+Bad step: Tank 2 can't shoot!
+Game step: 73
+Player 1 moved: shoot
+Player 2 moved: shoot
+Bad step: Tank 1 can't shoot!
+Bad step: Tank 2 can't shoot!
+Game step: 74
+Player 1 moved: shoot
+Player 2 moved: shoot
+Bad step: Tank 1 can't shoot!
+Bad step: Tank 2 can't shoot!
+Game step: 75
+Player 1 moved: shoot
+Player 2 moved: shoot
+Bad step: Tank 1 can't shoot!
+Bad step: Tank 2 can't shoot!
+Game step: 76
+Player 1 moved: shoot
+Player 2 moved: shoot
+Bad step: Tank 1 can't shoot!
+Bad step: Tank 2 can't shoot!
+Game step: 77
+Player 1 moved: shoot
+Player 2 moved: shoot
+Bad step: Tank 1 can't shoot!
+Bad step: Tank 2 can't shoot!
+Game step: 78
+Player 1 moved: shoot
+Player 2 moved: shoot
+Bad step: Tank 1 can't shoot!
+Bad step: Tank 2 can't shoot!
+Game step: 79
+Player 1 moved: shoot
+Player 2 moved: shoot
+Bad step: Tank 1 can't shoot!
+Bad step: Tank 2 can't shoot!
+Game step: 80
+Player 1 moved: shoot
+Player 2 moved: shoot
+Bad step: Tank 1 can't shoot!
+Bad step: Tank 2 can't shoot!
+Game step: 81
+Player 1 moved: shoot
+Player 2 moved: shoot
+Bad step: Tank 1 can't shoot!
+Bad step: Tank 2 can't shoot!
+Game step: 82
+Player 1 moved: shoot
+Player 2 moved: shoot
+Bad step: Tank 1 can't shoot!
+Bad step: Tank 2 can't shoot!
+Game step: 83
+Player 1 moved: shoot
+Player 2 moved: shoot
+Bad step: Tank 1 can't shoot!
+Bad step: Tank 2 can't shoot!
+Game step: 84
+Player 1 moved: shoot
+Player 2 moved: shoot
+Bad step: Tank 1 can't shoot!
+Bad step: Tank 2 can't shoot!
+Game step: 85
+Player 1 moved: shoot
+Player 2 moved: shoot
+Bad step: Tank 1 can't shoot!
+Bad step: Tank 2 can't shoot!
+Game step: 86
+Player 1 moved: shoot
+Player 2 moved: shoot
+Bad step: Tank 1 can't shoot!
+Bad step: Tank 2 can't shoot!
+Game step: 87
+Player 1 moved: shoot
+Player 2 moved: shoot
+Bad step: Tank 1 can't shoot!
+Bad step: Tank 2 can't shoot!
+Game step: 88
+Player 1 moved: shoot
+Player 2 moved: shoot
+Bad step: Tank 1 can't shoot!
+Bad step: Tank 2 can't shoot!
+Game step: 89
+Player 1 moved: shoot
+Player 2 moved: shoot
+Bad step: Tank 1 can't shoot!
+Bad step: Tank 2 can't shoot!
+Game step: 90
+Player 1 moved: shoot
+Player 2 moved: shoot
+Bad step: Tank 1 can't shoot!
+Bad step: Tank 2 can't shoot!
+Game step: 91
+Player 1 moved: shoot
+Player 2 moved: shoot
+Bad step: Tank 1 can't shoot!
+Bad step: Tank 2 can't shoot!
+Game step: 92
+Player 1 moved: shoot
+Player 2 moved: shoot
+Bad step: Tank 1 can't shoot!
+Bad step: Tank 2 can't shoot!
+Game step: 93
+Player 1 moved: shoot
+Player 2 moved: shoot
+Bad step: Tank 1 can't shoot!
+Bad step: Tank 2 can't shoot!
+Game step: 94
+Player 1 moved: shoot
+Player 2 moved: shoot
+Bad step: Tank 1 can't shoot!
+Bad step: Tank 2 can't shoot!
+Game step: 95
+Player 1 moved: shoot
+Player 2 moved: shoot
+Bad step: Tank 1 can't shoot!
+Bad step: Tank 2 can't shoot!
+Game step: 96
+Player 1 moved: shoot
+Player 2 moved: shoot
+Bad step: Tank 1 can't shoot!
+Bad step: Tank 2 can't shoot!
+Game step: 97
+Player 1 moved: shoot
+Player 2 moved: shoot
+Bad step: Tank 1 can't shoot!
+Bad step: Tank 2 can't shoot!
+Game step: 98
+Player 1 moved: shoot
+Player 2 moved: shoot
+Bad step: Tank 1 can't shoot!
+Bad step: Tank 2 can't shoot!
+Game step: 99
+Player 1 moved: shoot
+Player 2 moved: shoot
+Bad step: Tank 1 can't shoot!
+Bad step: Tank 2 can't shoot!
+Game step: 100
+Player 1 moved: shoot
+Player 2 moved: shoot
+Bad step: Tank 1 can't shoot!
+Bad step: Tank 2 can't shoot!
+Game step: 101
+Player 1 moved: shoot
+Player 2 moved: shoot
+Bad step: Tank 1 can't shoot!
+Bad step: Tank 2 can't shoot!
+Game step: 102
+Player 1 moved: shoot
+Player 2 moved: shoot
+Bad step: Tank 1 can't shoot!
+Bad step: Tank 2 can't shoot!
+Game step: 103
+Player 1 moved: shoot
+Player 2 moved: shoot
+Bad step: Tank 1 can't shoot!
+Bad step: Tank 2 can't shoot!
+Game step: 104
+Player 1 moved: shoot
+Player 2 moved: shoot
+Bad step: Tank 1 can't shoot!
+Bad step: Tank 2 can't shoot!
+Game step: 105
+Player 1 moved: shoot
+Player 2 moved: shoot
+Bad step: Tank 1 can't shoot!
+Bad step: Tank 2 can't shoot!
+Game Over! It's a tie due to time out!

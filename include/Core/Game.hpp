@@ -32,12 +32,13 @@ private:
     std::set<int> shellsToRemove;
     std::unordered_map<int, Artillery *> secondaryArtilleries;
     std::unordered_map<int, Tank*> secondaryTanks;
+    std::unordered_map<int, Artillery *> artilleriesFired;
 
 protected:
 
 
 public:
-    Game();
+    Game(std::string inputFile);
 
     int getWidth();
     int getHeight();
@@ -49,7 +50,7 @@ public:
     std::unordered_map<int, Artillery *> getArtillery();
     std::set<int> &getMines();
     std::unordered_map<int, Wall> &getWalls();
-
+    void processInputFile(const std::string& inputFilePath);
 
     void getPlayersInput(std::ofstream &file);
     int getWallHealth(int wallPos);
@@ -62,7 +63,7 @@ public:
     void removeMine(int x);
     void removeWall(int x);
     void removeTank(int tankId);
-    void removeArtillery(int artilleryId);
+    void removeArtillery(int artilleryPos);
     void removeTanks();
     void removeArtilleries();
     void removeWalls();
@@ -76,6 +77,7 @@ public:
     void runGame();
     void printBoard();
     void advanceArtilleries();
+    void advanceArtilleriesRecentlyFired();
     void executeTanksMoves();
     void removeObjectsFromTheBoard();
     void reverseHandler(Tank *tank, std::string move);

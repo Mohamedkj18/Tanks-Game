@@ -8,15 +8,33 @@
 #include <cmath>
 
 
-std::ofstream outputFile("data/output.txt");
+
 std::ofstream visualizationFile("data/visualization.txt");
+std::ofstream outputFile;
 // ------------------------ Game ------------------------
 
-Game::Game()
+Game::Game(std:: string inputFile)
 {
-    
+    processInputFile(inputFile);
     gameStep = 0;
     totalShellsRemaining = 0;
+}
+
+void Game::processInputFile(const std::string& inputFilePath) {
+    size_t lastSlash = inputFilePath.find_last_of("/\\");
+    std::string inputFileName = (lastSlash == std::string::npos) ? inputFilePath : inputFilePath.substr(lastSlash + 1);
+
+    std::string outputFileName = "data/output_" + inputFileName;
+
+
+    outputFile.open(outputFileName);
+    if (!outputFile.is_open()) {
+        std::cerr << "Error: Could not create output file: " << outputFileName << std::endl;
+        return;
+    }
+
+
+    std::cout << "Output written to: " << outputFileName << std::endl;
 }
 
 int Game::getWidth() { return width; }
@@ -72,14 +90,37 @@ Tank* Game::getPlayer(int playerId)
 void Game::addArtillery(Artillery *artillery)
 {
     int newPos = bijection(artillery->getX(), artillery->getY());
-    if (secondaryTanks.count(newPos))tankHitByAShell(newPos);
-    else if (artilleries.count(newPos))shellsToRemove.insert(newPos);
-    else if (walls.count(newPos))
-    {
+    if(artilleriesFired.count(newPos)){
         shellsToRemove.insert(newPos);
-        artilleryHitAWall(newPos);
+        outputFile << "Artilleries collided at (" << artillery->getX() / 2 << ", " << artillery->getY() / 2 << ") !\n";
     }
-    artilleries[bijection(artillery->getX(), artillery->getY())] = artillery;
+    artilleriesFired[newPos] = artillery;
+    
+}
+
+
+void Game::advanceArtilleriesRecentlyFired(){
+    for(int shellPos : shellsToRemove){
+        removeArtillery(shellPos);
+        artilleriesFired.erase(shellPos);
+    }
+    for(const auto &pair : artilleriesFired){ 
+        Artillery *artillery = pair.second;
+        artilleries.erase(pair.first);
+        artillery->moveForward(); 
+        int newPos = bijection(artillery->getX(), artillery->getY());
+        if (artilleries.count(newPos))shellsToRemove.insert(newPos);
+        else if (tanks.count(newPos)){
+            artilleries[newPos] = artillery;
+            tankHitByAShell(newPos);
+        }
+        else if (walls.count(newPos)){
+            shellsToRemove.insert(newPos);
+            artilleryHitAWall(newPos);
+        }
+        artilleries[newPos] = artillery;
+    }
+    artilleriesFired.clear();
 }
 
 void Game::addMine(int x, int y)
@@ -356,7 +397,7 @@ void Game::advanceArtilleries(){
             tank->incrementCantShoot();
             }
         else{
-            outputFile << "Bad step: Tank " << tank->getId() << " can't shoot yet!\n";
+            outputFile << "Bad step: Tank " << tank->getId() << " can't shoot!\n";
         }
         tank->setLastMove("x");
     }
@@ -428,6 +469,7 @@ void Game::removeTanks()
     for(int object : tanksToRemove){
         removeTank(object);
     }
+    tanksToRemove.clear();
 }
 
 void Game::removeArtilleries()
@@ -435,6 +477,7 @@ void Game::removeArtilleries()
     for(int object : shellsToRemove){
         removeArtillery(object);
     }
+    shellsToRemove.clear();
 }
 
 void Game::removeWalls()
@@ -442,6 +485,7 @@ void Game::removeWalls()
     for(int object : wallsToRemove){
         removeWall(object);
     }
+    wallsToRemove.clear();
 }
 
 
@@ -449,9 +493,6 @@ void Game::removeObjectsFromTheBoard(){
     removeTanks();
     removeArtilleries();
     removeWalls();
-    tanksToRemove.clear();
-    shellsToRemove.clear();
-    wallsToRemove.clear();
 }
 
 
@@ -487,7 +528,7 @@ void Game::outputTankMove(int playerNum, std::string move)
         {"e", "rotate right by 45 degrees"},
         {"t", "shoot"},
         {"x", "ignore move"}};
-        ;
+        
     outputFile << "Player " << playerNum << " moved: " << moveMap[move] << std::endl;
 }
 
@@ -501,7 +542,7 @@ void Game::runGame()
 
     while (true)
     {
-        printBoard();
+        
         outputFile << "Game step: " << gameStep << std::endl;
         move = tankChase->getNextMove(1,2);
         getPlayer(1)->setLastMove(move);
@@ -517,7 +558,9 @@ void Game::runGame()
         removeObjectsFromTheBoard();
         
         executeTanksMoves();
+        advanceArtilleriesRecentlyFired();
         removeTanks();
+        removeArtilleries();
         executeTanksMoves();
         removeObjectsFromTheBoard();
         
@@ -526,18 +569,25 @@ void Game::runGame()
         advanceArtilleries();
         removeObjectsFromTheBoard();
 
-        if (checkForAWinner())return;
-        else if (isItATie())return;
-        else if (totalShellsRemaining == 0)
+        if (checkForAWinner()){
+            outputFile.close();
+            return;
+        }
+        else if (isItATie()){
+            outputFile.close();
+            return;
+        }
+        else if (totalShellsRemaining <= 0)
         {
             count++;
             if (count == 40)
             {
                 outputFile << "Game Over! It's a tie due to time out!\n";
+                outputFile.close();
                 return;
             }
         }
-
+        printBoard();
         gameStep++;
     }
 }

@@ -69,11 +69,11 @@ void Tank::rotateTank(double angle)
 void Tank::fire()
 {
     artilleryShells -= 1;
+    if(artilleryShells >= 0){
     Artillery *shell = new Artillery(x, y, direction, game);
     shell->moveForward();
-    shell->moveForward();
     game->addArtillery(shell);
-    
+}
 }
 
 void Tank::hit()
@@ -86,7 +86,7 @@ void Tank::incrementCantShoot() { cantShoot += 1; }
 
 void Tank::resetCantShoot() { cantShoot = 0; }
 
-bool Tank::canShoot() { return cantShoot == 0; }
+bool Tank::canShoot() { return artilleryShells > 0 and cantShoot == 0; }
 
 int Tank::getCantShoot() { return cantShoot; }
 

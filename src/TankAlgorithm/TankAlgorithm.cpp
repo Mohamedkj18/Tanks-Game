@@ -28,7 +28,10 @@ void TankAlgorithm::setTheMovesToBeExecuted(int playerNum, int playerToChase) {
     std::string directionOfTank = directionToString[tank->getDirection()];
     std::vector<std::pair<int,int>> positionsToGetTo = getPath(start, target);
     while(moveToAdd<numOfMovesPerPath){
-        if(i>=(int)positionsToGetTo.size())break;
+        if(i>=(int)positionsToGetTo.size()){
+            movesToBeExecuted[moveToAdd++] = "n"; 
+            continue;
+        }
         directionOfMove = getDirectionFromPosition(start, positionsToGetTo[i]);
         if(directionOfMove != directionOfTank)getMovesToRotateTank(directionOfMove, directionOfTank);
         if(moveToAdd < numOfMovesPerPath)movesToBeExecuted[moveToAdd++] = "w";
@@ -36,8 +39,12 @@ void TankAlgorithm::setTheMovesToBeExecuted(int playerNum, int playerToChase) {
         directionOfTank = directionOfMove;
         i++;
     }
+    
     moveToAdd = 0;
 }
+
+
+
 
 void TankAlgorithm::addMoveToBeExecuted(double angle) {
     if (angle == 0.125)movesToBeExecuted[moveToAdd++] = "e";
@@ -102,14 +109,16 @@ bool TankAlgorithm::isThereAMineOrAWall(int x,int y) {
 
 
 bool TankAlgorithm::isTheEnemyInRange(int playerNum,int playerToChase) {
-    int i;
+    int i,width,height;
+    width = game->getWidth();
+    height = game->getHeight();
     Tank* tank = game->getPlayer(playerToChase);
-    std::pair<int,int> target = {tank->getX(), tank->getY()};
+    std::pair<int,int> target = {tank->getX()/2, tank->getY()/2};
     tank = game->getPlayer(playerNum);
-    std::pair<int,int> start = {tank->getX(), tank->getY()};
+    std::pair<int,int> start = {tank->getX()/2, tank->getY()/2};
     std::array<int,2> offset = stringToIntDirection[tank->getDirection()];  
-    for (i=1;i<range;i++){
-        std::pair<int,int> newPos = {start.first + offset[0]*i, start.second + offset[1]*i};
+    for (i=1;i<range+1;i++){
+        std::pair<int,int> newPos = {(start.first + offset[0]*i+width*i)%width, (start.second + offset[1]*i+height*i)%height};
         if(newPos == target)return true;
     }
     return false;

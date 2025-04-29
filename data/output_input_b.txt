@@ -1,0 +1,54 @@
+Game step: 0
+Player 1 moved: rotate right by 90 degrees
+Player 2 moved: ignore move
+Game step: 1
+Player 1 moved: forward
+Player 2 moved: ignore move
+Game step: 2
+Player 1 moved: forward
+Player 2 moved: ignore move
+Game step: 3
+Player 1 moved: rotate left by 45 degrees
+Player 2 moved: forward
+Game step: 4
+Player 1 moved: forward
+Player 2 moved: rotate left by 90 degrees
+Game step: 5
+Player 1 moved: forward
+Player 2 moved: rotate left by 45 degrees
+Game step: 6
+Player 1 moved: forward
+Player 2 moved: forward
+Game step: 7
+Player 1 moved: forward
+Player 2 moved: rotate left by 45 degrees
+Game step: 8
+Player 1 moved: rotate right by 45 degrees
+Player 2 moved: forward
+Game step: 9
+Player 1 moved: forward
+Player 2 moved: rotate right by 45 degrees
+Game step: 10
+Player 1 moved: rotate left by 45 degrees
+Player 2 moved: forward
+Game step: 11
+Player 1 moved: forward
+Player 2 moved: forward
+Game step: 12
+Player 1 moved: rotate left by 45 degrees
+Player 2 moved: ignore move
+Game step: 13
+Player 1 moved: forward
+Player 2 moved: ignore move
+Game step: 14
+Player 1 moved: rotate right by 45 degrees
+Player 2 moved: forward
+Game step: 15
+Player 1 moved: shoot
+Player 2 moved: rotate left by 90 degrees
+Tank 1 fired!
+Game step: 16
+Player 1 moved: shoot
+Player 2 moved: forward
+Bad step: Tank 1 can't shoot!
+Game Over! Player 1 wins!

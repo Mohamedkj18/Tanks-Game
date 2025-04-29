@@ -17,6 +17,7 @@ public:
     std::vector<std::pair<int, int>> getPath(std::pair<int, int> start, std::pair<int, int> target);
     std::string getNextMove(int playerNum, int playerToChase);
     bool isThereATankClose(int x, int y);
+    std::pair<int,int> findFirstLegalLocationToFlee(int n, int m);
     
 };
 
